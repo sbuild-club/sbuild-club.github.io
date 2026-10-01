@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #0e0e10;
+  --paper: #f2eee6;
+  --signal: #ff5b1f;
+  --amber: #ffaf00;
+  --phosphor: #7cff6b;
+  --font-display: var(--font-unbounded), sans-serif;
+  --font-body: var(--font-plex-sans), sans-serif;
+  --font-mono: var(--font-plex-mono), monospace;
+  --font-pixel: var(--font-silkscreen), monospace;
+  --z-intro: 100;
+}
+
+/* Only the five tokens and four families exist as Tailwind colours/fonts. */
+@theme inline {
+  --color-*: initial;
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-signal: var(--signal);
+  --color-amber: var(--amber);
+  --color-phosphor: var(--phosphor);
+  --font-*: initial;
+  --font-display: var(--font-unbounded), sans-serif;
+  --font-body: var(--font-plex-sans), sans-serif;
+  --font-mono: var(--font-plex-mono), monospace;
+  --font-pixel: var(--font-silkscreen), monospace;
+  --default-font-family: var(--font-plex-sans), sans-serif;
+  --default-mono-font-family: var(--font-plex-mono), monospace;
+}
+
+@theme {
+  --animate-blink: blink 1.06s steps(1, end) infinite;
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
+/* html[data-intro] is set before first paint by the gate script in layout.tsx. */
+@custom-variant intro-pending (html[data-intro="pending"] &);
+@custom-variant intro-done (html[data-intro="done"] &);
+
+@utility scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--paper) 4%, transparent) 0 1px,
+    transparent 1px 2px,
+    color-mix(in srgb, var(--ink) 6%, transparent) 2px 3px,
+    transparent 3px 4px
+  );
+}
+
+@utility stepped-gradient {
+  background-image: linear-gradient(
+    to bottom,
+    var(--signal) 0 20%,
+    color-mix(in srgb, var(--signal) 50%, var(--amber)) 20% 40%,
+    var(--amber) 40% 60%,
+    color-mix(in srgb, var(--amber) 50%, var(--paper)) 60% 80%,
+    var(--paper) 80% 100%
+  );
+}
+
+@layer base {
+  html {
+    background-color: var(--ink);
+    color-scheme: dark;
+    scrollbar-gutter: stable;
+  }
+
+  html[data-intro="pending"] {
+    overflow: hidden;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+
+  [data-surface="light"] :focus-visible {
+    outline-color: var(--ink);
+  }
+
+  ::selection {
+    background-color: var(--signal);
+    color: var(--ink);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
