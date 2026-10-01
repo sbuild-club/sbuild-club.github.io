@@ -1,8 +1,4 @@
-// Stub: the pixel lane replaces this.
+// Full-viewport CRT scanline overlay. The `scanlines` utility (globals.css) keeps it ≤6% opacity.
 export function Scanlines() {
-  return (
-    <div aria-hidden="true" className="border-2 border-dashed border-paper/40 p-8 font-mono text-sm text-paper/70">
-      Scanlines
-    </div>
-  );
+  return <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[90] scanlines" />;
 }

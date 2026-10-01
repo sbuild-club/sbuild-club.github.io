@@ -1,0 +1,41 @@
+/* Two-frame idle: frame A is the resting pose, frame B blinks, tilts the antenna and
+   squashes the upper body 1px. Only opacity toggles, in hard steps. The loop runs only
+   after the intro is done and only when motion is allowed; otherwise frame A holds. */
+
+.frameB {
+  opacity: 0;
+}
+
+@keyframes mascot-frame-a {
+  0% {
+    opacity: 1;
+  }
+  62% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes mascot-frame-b {
+  0% {
+    opacity: 0;
+  }
+  62% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html[data-intro="done"]) .frameA {
+    animation: mascot-frame-a 1.6s steps(1, end) infinite;
+  }
+
+  :global(html[data-intro="done"]) .frameB {
+    animation: mascot-frame-b 1.6s steps(1, end) infinite;
+  }
+}

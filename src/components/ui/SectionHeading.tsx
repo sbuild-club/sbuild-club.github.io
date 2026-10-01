@@ -12,7 +12,7 @@ export function SectionHeading({ title, number, as: Heading = "h2", cursor = fal
   return (
     <Heading className={["flex flex-col gap-2", className].filter(Boolean).join(" ")}>
       {number ? <span className="font-pixel text-sm leading-none">{number}</span> : null}
-      <span className={`font-display leading-none font-bold tracking-tighter lowercase ${size}`}>
+      <span className={`font-display leading-none font-bold tracking-tighter wrap-anywhere lowercase ${size}`}>
         {title}
         {cursor ? (
           <span aria-hidden="true" className="ml-1 inline-block intro-done:motion-safe:animate-blink">

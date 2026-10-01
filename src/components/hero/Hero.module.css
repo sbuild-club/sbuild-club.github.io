@@ -1,0 +1,22 @@
+/* Ambient motion only: runs once the intro is done and only when motion is allowed. */
+
+.float {
+  width: fit-content;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html[data-intro="done"]) .float {
+    animation: hero-float 2.4s steps(1, end) infinite;
+  }
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
