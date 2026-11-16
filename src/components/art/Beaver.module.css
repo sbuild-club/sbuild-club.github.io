@@ -1,4 +1,4 @@
-/* STUB (foundation), replaced by the art lane. Idle blink: the eyes squash shut for a moment.
+/* Beaver idle blink: the eyes squash shut for a moment, twice in quick succession now and then.
    Runs only after the intro is done and only when motion is allowed; otherwise the eyes stay open. */
 
 .eye {
@@ -8,17 +8,20 @@
 
 @keyframes beaver-blink {
   0%,
+  88%,
   92%,
+  94%,
   100% {
     transform: scaleY(1);
   }
-  95% {
+  90%,
+  96% {
     transform: scaleY(0.1);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   :global(html[data-intro="done"]) .blink .eye {
-    animation: beaver-blink 4.2s ease-in-out infinite;
+    animation: beaver-blink 5.6s ease-in-out infinite;
   }
 }

@@ -1,5 +1,6 @@
-// STUB (foundation). Replaced by the art lane with the finished mascot (bark body, navy cap with
-// steel brim, blush teeth). Props and root element are frozen (docs/CONTRACT.md §2).
+// The beaver mascot, redrawn from the banner: a broad bark body rising from the bottom edge,
+// bark-deep ears, eyes, nose and mouth, two blush teeth, and a navy cap with its steel brim
+// pointing right. Props and root element are frozen (docs/CONTRACT.md §2).
 import { cx } from "@/components/ui/cx";
 import styles from "./Beaver.module.css";
 
@@ -22,22 +23,38 @@ export function Beaver({ size = 240, blink = true, className }: BeaverProps) {
       focusable="false"
       className={cx("block", blink && styles.blink, className)}
     >
-      <circle cx="54" cy="62" r="24" className="fill-bark-deep" />
-      <circle cx="186" cy="62" r="24" className="fill-bark-deep" />
-      <path d="M18 200 L32 100 Q38 66 76 50 L98 38 Q120 30 142 38 L164 50 Q202 66 208 100 L222 200 Z" className="fill-bark" />
-      <polygon points="120,34 196,40 182,54 100,48" className="fill-steel" />
-      <polygon points="86,44 92,14 126,4 156,14 160,40" className="fill-navy" />
-      <circle cx="98" cy="92" r="7" className={cx("fill-bark-deep", styles.eye)} />
-      <circle cx="142" cy="92" r="7" className={cx("fill-bark-deep", styles.eye)} />
-      <rect x="104" y="104" width="32" height="26" rx="8" className="fill-bark-deep" />
+      {/* ears, tucked behind the head */}
+      <path d="M20 112 Q18 80 44 76 Q66 74 70 98 Z" className="fill-bark-deep" />
+      <path d="M168 76 Q170 56 192 56 Q214 58 214 86 Z" className="fill-bark-deep" />
+      {/* head and body: one cut piece with rounded shoulders, high under the cap */}
       <path
-        d="M120 128 V148 M84 150 Q120 143 156 150"
+        d="M1 200 L4 142 Q6 118 25 108 L88 63 L122 56 L170 64 Q208 72 223 100 Q228 110 229 124 L240 200 Z"
+        className="fill-bark"
+      />
+      {/* cap: steel brim to the right, navy crown over it */}
+      <polygon points="104,64 121,48 166,49 171,60 154,71" className="fill-steel" />
+      <polygon
+        points="84.6,39.6 94.2,28.4 110.4,21.8 133.2,26.4 145.2,44.9 143.4,51.5 130.2,56.1 112.2,61.4 91.2,64.7 84.6,61.4"
+        className="fill-navy"
+      />
+      {/* face */}
+      <circle cx="97" cy="93" r="6.6" className={cx("fill-bark-deep", styles.eye)} />
+      <circle cx="140.5" cy="93" r="6.6" className={cx("fill-bark-deep", styles.eye)} />
+      <rect x="100" y="103.5" width="37" height="29" rx="6" className="fill-bark-deep" />
+      <rect x="116.2" y="130" width="4.4" height="25" className="fill-bark-deep" />
+      <path d="M85 155.5 Q90 171 104 171.5 L134 171.5 Q148 171 152.5 155.5 Z" className="fill-bark-deep" />
+      {/* two teeth cut as one piece, notched between them */}
+      <path
+        d="M103 157 L134 157 L134 175.5 Q134 180.5 129 180.5 L124.5 180.5 Q120.5 180.5 118.5 176 Q116.5 180.5 112.5 180.5 L108 180.5 Q103 180.5 103 175.5 Z"
+        className="fill-blush"
+      />
+      <path
+        d="M79 153 L118.5 157.5 L158.5 153"
         strokeWidth="5"
         strokeLinecap="round"
+        strokeLinejoin="round"
         className="fill-none stroke-bark-deep"
       />
-      <rect x="107" y="150" width="12" height="18" rx="3" className="fill-blush" />
-      <rect x="121" y="150" width="12" height="18" rx="3" className="fill-blush" />
     </svg>
   );
 }
