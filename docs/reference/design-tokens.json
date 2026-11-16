@@ -1,0 +1,93 @@
+{
+  "name": "SBUILD",
+  "version": 1,
+  "color": {
+    "themes": [{ "id": "light", "name": "Light" }],
+    "tokens": [
+      { "name": "cream", "value": "#f8efd6", "usage": "Page background and the default surface. Also the text colour on teal and navy (7.0:1 and 9.5:1)." },
+      { "name": "sage", "value": "#b8d7ae", "usage": "Section bands and the large angled side panels. Navy text on it is 7.0:1, teal text 5.1:1." },
+      { "name": "sage-soft", "value": "#d2e0bf", "usage": "Second, lighter panel layer that overlaps sage, and the dashed stitch lines on cream." },
+      { "name": "mint", "value": "#87c896", "usage": "Decoration only: ray bursts, exclamation marks, the lightbulb, keycap letters on steel. Never text on cream or sage." },
+      { "name": "steel", "value": "#4c7e94", "usage": "Wordmark letters, keycap tops, pixel clusters, display type at 24px and up on cream (3.9:1, so never small text)." },
+      { "name": "teal-mid", "value": "#396275", "usage": "Lighter side face of a keycap. Shading only." },
+      { "name": "teal", "value": "#2f5565", "usage": "Plaques, dark bands, darker keycap face, secondary text on cream (7.0:1) and on sage (5.1:1)." },
+      { "name": "navy", "value": "#2a3d5a", "usage": "Body text on cream, sage and sage-soft (9.5:1 on cream). The S of the wordmark, the beaver's cap, star bursts, focus ring." },
+      { "name": "bark", "value": "#625045", "usage": "Beaver body. Mascot only, never UI." },
+      { "name": "bark-deep", "value": "#382e27", "usage": "Beaver ears, eyes, nose and mouth. Mascot only." },
+      { "name": "blush", "value": "#deb39e", "usage": "Beaver teeth. May appear as one tiny warm accent per screen at most; never text." }
+    ]
+  },
+  "type": {
+    "fonts": [],
+    "families": {
+      "display": "\"Bungee\", \"Arial Black\", sans-serif",
+      "label": "\"Fredoka\", \"Trebuchet MS\", sans-serif",
+      "body": "\"Nunito\", \"Segoe UI\", sans-serif"
+    },
+    "groups": [
+      {
+        "name": "Display",
+        "family": "display",
+        "styles": [
+          { "name": "display-hero", "fontSize": "96px", "lineHeight": 0.95, "fontWeight": 400, "letterSpacing": "0.01em", "sample": "BUILD IT", "usage": "Hero headline. Steel or navy on cream, cream on teal." },
+          { "name": "display-section", "fontSize": "48px", "lineHeight": 1.05, "fontWeight": 400, "sample": "PROGRAMS", "usage": "Section headings." },
+          { "name": "display-card", "fontSize": "26px", "lineHeight": 1.15, "fontWeight": 400, "sample": "DEMO NIGHT", "usage": "Card titles. Navy or teal; steel only at this size or larger." }
+        ]
+      },
+      {
+        "name": "Label",
+        "family": "label",
+        "styles": [
+          { "name": "label-plaque", "fontSize": "24px", "lineHeight": 1.2, "fontWeight": 600, "letterSpacing": "0.06em", "sample": "SBU's First Tech Entrepreneurship Club", "usage": "Tagline and plaque text: cream on teal." },
+          { "name": "label-button", "fontSize": "17px", "lineHeight": 1.2, "fontWeight": 600, "letterSpacing": "0.04em", "sample": "Join the club", "usage": "Buttons and nav links." },
+          { "name": "label-tag", "fontSize": "13px", "lineHeight": 1.2, "fontWeight": 600, "letterSpacing": "0.06em", "sample": "hardware", "usage": "Tags, dates, small labels. Navy or teal on light grounds, cream on teal." }
+        ]
+      },
+      {
+        "name": "Text",
+        "family": "body",
+        "styles": [
+          { "name": "body-lead", "fontSize": "20px", "lineHeight": 1.5, "fontWeight": 500, "usage": "Mission line and section intros. Navy." },
+          { "name": "body", "fontSize": "17px", "lineHeight": 1.6, "fontWeight": 400, "usage": "Body copy. Navy on cream, sage or sage-soft; cream on teal." },
+          { "name": "body-small", "fontSize": "14px", "lineHeight": 1.5, "fontWeight": 500, "usage": "Captions and footer text. Teal on cream, navy on sage." }
+        ]
+      }
+    ]
+  },
+  "spacing": {
+    "tokens": [
+      { "name": "space-2", "value": "8px", "usage": "Gap between a tag and its neighbour; pixel-cluster square gap is half this." },
+      { "name": "space-4", "value": "16px", "usage": "Page gutter on phones; padding inside tags and buttons." },
+      { "name": "space-6", "value": "24px", "usage": "Card padding; gap between cards." },
+      { "name": "space-10", "value": "40px", "usage": "Gap between a section heading and its content." },
+      { "name": "space-16", "value": "64px", "usage": "Header height; vertical padding of a section on phones." },
+      { "name": "space-24", "value": "96px", "usage": "Vertical padding of a section on desktop." },
+      { "name": "layer-offset", "value": "6px", "usage": "How far the flat second paper layer sits down and right of a card, button or plaque. The layer is a solid colour, never a blurred shadow." }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      { "name": "radius-cut", "value": "0px", "usage": "Cards, buttons and plaques have no radius: their outline is a cut polygon from the cut tokens." },
+      { "name": "radius-soft", "value": "12px", "usage": "Only inside illustrations (beaver nose, teeth) and for the focus ring on round elements." },
+      { "name": "radius-badge", "value": "50%", "usage": "The round badge logo and avatars, always with a stitch ring inside." }
+    ]
+  },
+  "cut": {
+    "note": "Hand-cut outlines as clip-path values. Every card, button and plaque takes one, so no two neighbours share the same outline.",
+    "tokens": [
+      { "name": "cut-a", "value": "polygon(1% 5%, 99% 0%, 100% 94%, 2% 100%)", "usage": "Cards and buttons, first variant." },
+      { "name": "cut-b", "value": "polygon(0% 2%, 97% 4%, 100% 98%, 3% 95%)", "usage": "Cards and buttons, second variant; alternate with cut-a." },
+      { "name": "cut-c", "value": "polygon(2% 0%, 100% 6%, 98% 100%, 0% 93%)", "usage": "Cards and buttons, third variant." },
+      { "name": "cut-plaque", "value": "polygon(1% 22%, 9% 2%, 27% 14%, 40% 0%, 62% 10%, 74% 2%, 97% 8%, 100% 46%, 98% 84%, 76% 92%, 60% 100%, 44% 90%, 30% 100%, 7% 94%, 0% 74%)", "usage": "The jagged tagline plaque. Teal fill, cream label-plaque text." }
+    ]
+  },
+  "stitch": {
+    "note": "The dashed stitch line that edges the banner and rings the badge.",
+    "tokens": [
+      { "name": "stitch-dash", "value": "30px", "usage": "Length of one dash." },
+      { "name": "stitch-gap", "value": "14px", "usage": "Gap between dashes." },
+      { "name": "stitch-weight", "value": "6px", "usage": "Thickness of a dash. Dash ends are slightly rounded." },
+      { "name": "stitch-row-gap", "value": "10px", "usage": "Gap between the two rows. Stitch lines always come as a pair." }
+    ]
+  }
+}
