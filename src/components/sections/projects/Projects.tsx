@@ -16,6 +16,8 @@ const tagStyles = [
   { tone: "cream", cut: "b" },
 ] as const;
 
+// Three columns only from xl: below 1280px a third of the row is too narrow for a long single
+// word in a title (a 16-letter word in the display face needs about 270px at 24px).
 export function Projects() {
   const title = site.nav.links.find((l) => l.href === "#projects")?.label ?? "";
 
@@ -23,12 +25,16 @@ export function Projects() {
     <section id="projects" className="relative px-4 py-16 sm:px-10 sm:py-24">
       <StarBurst className="absolute top-10 right-4 h-auto w-16 rotate-6 sm:top-14 sm:right-[6%] sm:w-24" />
       <div className="mx-auto max-w-[1200px]">
-        <SectionHeading title={title} tone="steel" className="mb-8 pr-20 sm:mb-10 sm:pr-32" />
-        <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
+        {/* The right padding keeps the heading clear of the star burst. */}
+        <div className="mb-8 pr-20 sm:mb-10 sm:pr-32">
+          <SectionHeading title={title} tone="steel" />
+        </div>
+        <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-7">
           {site.projects.map((project, i) => (
             <PaperCard key={i} as="li" cut={tileCuts[i % tileCuts.length]} tone="sage-soft">
               <ProjectIcon name={project.icon} size={64} className="block shrink-0 text-steel" />
-              <SectionHeading as="h3" title={project.name} />
+              {/* display-card at the mockup's 24px for tile titles. */}
+              <h3 className="font-display text-2xl leading-[1.15] font-normal wrap-break-word uppercase">{project.name}</h3>
               <ul className="mt-auto flex flex-wrap gap-2 pt-1">
                 {project.tags.map((tag, j) => {
                   const style = tagStyles[(i + j) % tagStyles.length];
