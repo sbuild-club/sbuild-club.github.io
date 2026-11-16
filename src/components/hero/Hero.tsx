@@ -8,8 +8,16 @@ import { BannerArt } from "./BannerArt";
 import { CtaArt } from "./CtaArt";
 
 // One static class string per headline line (Tailwind scans literals). The middle line is steel
-// and tilted from its left edge, as in the mockup.
-const LINE_CLASSES = ["block", "block origin-left -rotate-[1.5deg] text-steel", "block"] as const;
+// and tilted 1.5deg, as in the mockup. It is only as wide as its text and turns about its centre,
+// so each end moves at most half a column width × tan(1.5deg) ≈ 0.16em (column ≤ 12em, see
+// below). Bungee caps rise 0.74em, so at leading 0.95 the gap between lines is 0.21em; the
+// 0.12em margin above and below raises that to 0.33em, enough that the tilted line never touches
+// its neighbours (brackets, which reach 0.80em up and 0.10em down, still clear by 0.19em).
+const LINE_CLASSES = [
+  "block",
+  "my-[0.12em] block w-fit max-w-full origin-center -rotate-[1.5deg] text-steel",
+  "block",
+] as const;
 
 /**
  * Hero (#top). Two parts:
@@ -44,8 +52,11 @@ export function Hero() {
       </div>
 
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-12 px-4 pt-10 pb-14 sm:px-6 md:pt-16 md:pb-22 lg:px-10">
-        <div className="flex min-w-0 flex-[999_1_32rem] flex-col gap-5 sm:gap-7">
-          <p className="font-display text-[clamp(2.125rem,5.4vw,4.75rem)] leading-[1.02] tracking-[0.01em] wrap-anywhere text-navy uppercase">
+        {/* The column is a size container: the headline is sized against the column itself
+            (8.3cqi = 1/12 of its width), so a 16-letter word (Bungee: ENTREPRENEURSHIP ≈ 11.3em)
+            always fits on one line from 375px up. Only strings wider than 12em break, as a last resort. */}
+        <div className="@container flex min-w-0 flex-[999_1_32rem] flex-col gap-5 sm:gap-7">
+          <p className="font-display text-[length:clamp(1.75rem,8.3cqi,4.75rem)] leading-[0.95] tracking-[0.01em] wrap-break-word text-navy uppercase">
             {site.hero.headlineLines.map((line, i) => (
               <span key={i} className={LINE_CLASSES[i]}>
                 {line}

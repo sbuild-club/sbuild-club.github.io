@@ -1,4 +1,5 @@
 import { StitchLine } from "@/components/ui/StitchLine";
+import { rootHref } from "@/components/nav/rootHref";
 import { site } from "@/content/site";
 
 /**
@@ -11,7 +12,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-[75rem] flex-col gap-6 sm:gap-8">
         <a
           href={`mailto:${site.footer.email}`}
-          className="self-start font-display text-[clamp(1.625rem,3.4vw,2.875rem)] leading-[1.1] wrap-anywhere text-cream hover:text-sage"
+          className="inline-flex min-h-11 items-center self-start font-display text-[clamp(1.625rem,3.4vw,2.875rem)] leading-[1.1] wrap-anywhere text-cream hover:text-sage"
         >
           {site.footer.email}
         </a>
@@ -22,13 +23,13 @@ export function Footer() {
           <ul className="flex flex-wrap gap-x-6 sm:gap-x-7">
             {site.footer.socials.map((social, i) => (
               <li key={i}>
-                <a href={social.href} className="flex min-h-11 items-center text-cream hover:text-sage">
+                <a href={rootHref(social.href)} className="flex min-h-11 items-center text-cream hover:text-sage">
                   {social.label}
                 </a>
               </li>
             ))}
           </ul>
-          <a href="#top" className="flex min-h-11 items-center gap-2 self-start text-sage hover:text-cream sm:ml-auto sm:self-auto">
+          <a href={rootHref("#top")} className="flex min-h-11 items-center gap-2 self-start text-sage hover:text-cream sm:ml-auto sm:self-auto">
             back to top
             <span aria-hidden="true">↑</span>
           </a>
