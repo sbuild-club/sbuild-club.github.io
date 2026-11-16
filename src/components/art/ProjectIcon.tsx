@@ -35,7 +35,7 @@ const shapes: Record<ProjectIconName, Shape> = {
   // Bulb with a zig-zag filament cut out, and three base stripes.
   lightbulb: {
     pieces: [
-      "M20 4 L43 3 L55 15 L56 30 L47 40 L45 46 L21 47 L18 40 L9 30 L8 15 Z M21 22 L27 16 L32 23 L37 16 L43 22 L40 25 L37 22 L32 29 L27 22 L24 25 Z",
+      "M20 4 L43 3 L55 15 L56 30 L47 40 L45 46 L21 47 L18 40 L9 30 L8 15 Z M20 23 L27 15 L32 22 L37 15 L44 23 L40.5 27.5 L37 23.5 L32 31 L27 23.5 L23.5 27.5 Z",
       "M20 50 L45 49 L45.5 54 L20.5 55 Z",
       "M23 57.5 L42 57 L41.5 62 L24 62.5 Z",
     ],
@@ -61,15 +61,15 @@ const shapes: Record<ProjectIconName, Shape> = {
   // Satellite: body, dish and antenna, two slatted solar panels on short arms; tipped over.
   satellite: {
     pieces: [
-      "M24 21 L40 20.5 L41 43 L25 43.5 Z",
-      "M23 18.5 L41 18 L38 11 L32 8.5 L26 11 Z",
-      "M31 1 L34 1 L34.5 9.5 L30.5 9.5 Z",
-      "M0 17 L21 18 L20.5 46 L1 45 Z M9 22 L12.5 22 L12.5 41 L9 41 Z",
-      "M19.5 29 L25.5 29 L25.5 35 L19.5 35 Z",
-      "M43.5 18.5 L64 18 L63.5 46 L44 46.5 Z M52 22 L55.5 22 L55.5 41 L52 41 Z",
-      "M39.5 29 L45 29 L45 35 L39.5 35 Z",
+      "M24 20.5 L40 20 L41 44 L25 44.5 Z",
+      "M23 18 L41 17.5 L38 10.5 L32 8 L26 10.5 Z",
+      "M31 1.5 L34 1.5 L34.5 9 L30.5 9 Z",
+      "M3 15 L21 16 L20.5 47 L3.5 46 Z M10.5 20 L14 20 L14 42 L10.5 42 Z",
+      "M20 29 L25 29 L25 35 L20 35 Z",
+      "M43.5 16 L61 15 L60.5 46.5 L44 47 Z M50.5 20 L54 20 L54 42 L50.5 42 Z",
+      "M40 29 L44 29 L44 35 L40 35 Z",
     ],
-    transform: "translate(32 32) rotate(-24) scale(0.88) translate(-32 -32)",
+    transform: "translate(32 32) rotate(-15) scale(0.97) translate(-32 -32)",
   },
   // Pole on a foot, with a swallow-tailed pennant.
   flag: {
