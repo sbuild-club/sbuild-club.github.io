@@ -1,12 +1,15 @@
-// The intro storyboard (docs/BRIEF.md "Intro sequence", docs/reference/mockup/Intro.html), about 3 s:
+// The intro storyboard (docs/BRIEF.md "Intro sequence", docs/reference/mockup/Intro.html), about 3.2 s:
 //   1. desk (0.0 s): stitch lines sew in from opposite sides
-//   2. keys drop (0.4 s): six keycaps tumble in, each with its own spin, and bounce once
-//   3. keys build the name (1.4 s): they slide home and flip into the letters; a mint burst pops
-//   4. land (2.2 s): the name FLIPs onto #wordmark while the cream sheet peels away
+//   2. keys drop (0.34 s): six keycaps tumble in, each with its own spin, and bounce once
+//   3. keys build the name (1.24 s): they slide home and flip into the letters (the cap lands on
+//      the S right after it turns); a mint burst pops with the last letter
+//   4. plaque and beaver (1.97 s): the tagline plaque drops under the name, the beaver pops up
+//   5. land (2.41 s): the name FLIPs onto #wordmark while the cream sheet, carrying the stitches,
+//      burst, plaque and beaver, peels away and uncovers the hero's own
 // startIntro() is called from Intro's effect only when html[data-intro] is "pending".
 // Everything is DOM/SVG animated with the Web Animations API (transform and opacity only).
 
-import { wordmarkPaths } from "@/components/art/wordmarkPaths";
+import { toPointsAttr, wordmarkPaths } from "@/components/art/wordmarkPaths";
 import {
   endIntro,
   getIntroState,
@@ -26,17 +29,21 @@ const STITCH_MS = 420; // 0.00 s, bottom row 90 ms later
 const STITCH_STAGGER_MS = 90;
 const DROP_AT_MS = 340; // 0.34 s: first key starts falling (later if fonts are slow, capped)
 const FONTS_CAP_MS = 700;
-const DROP_STAGGER_MS = 60;
-const FALL_MS = 480;
-const BOUNCE_MS = 200; // last key settles at about 1.32 s
-const SLIDE_STAGGER_MS = 30; // 1.32 s: keys start sliding home
-const SLIDE_MS = 340;
+const DROP_STAGGER_MS = 50;
+const FALL_MS = 450;
+const BOUNCE_MS = 200; // last key settles at about 1.24 s
+const SLIDE_STAGGER_MS = 30; // 1.24 s: keys start sliding home
+const SLIDE_MS = 300;
 const FLIP_OUT_MS = 110;
-const FLIP_IN_MS = 170; // last letter lands at about 2.09 s, with the burst
+const FLIP_IN_MS = 170; // last letter lands at about 1.97 s, with the burst
+const CAP_MS = 260; // right after the S has turned, about 1.82 s
 const BURST_MS = 280;
-const LAND_HOLD_MS = 80; // 2.17 s: the name moves onto #wordmark
+const PLAQUE_MS = 280; // 1.97 s
+const BEAVER_DELAY_MS = 100;
+const BEAVER_MS = 300; // ends about 2.37 s
+const LAND_HOLD_MS = 40; // 2.41 s: the name moves onto #wordmark
 const MOVE_MS = 620;
-const PEEL_DELAY_MS = 280; // 2.45 s: the sheet starts peeling, gone at about 2.93 s
+const PEEL_DELAY_MS = 280; // 2.69 s: the sheet starts peeling, gone at about 3.17 s
 const PEEL_MS = 480;
 const SKIP_FADE_MS = 160;
 const FADE_MS = 320;
@@ -76,7 +83,10 @@ type Parts = {
   keys: HTMLElement[];
   mark: SVGSVGElement;
   letters: SVGGElement[];
+  cap: SVGGElement;
   burst: HTMLElement;
+  plaque: HTMLElement;
+  beaver: HTMLElement;
   skip: HTMLElement;
 };
 
@@ -86,13 +96,17 @@ function findParts(root: HTMLElement): Parts | null {
   const sheet = one<HTMLElement>("sheet");
   const mark = one<SVGSVGElement>("mark");
   const burst = one<HTMLElement>("burst");
+  const cap = one<SVGGElement>("cap");
+  const plaque = one<HTMLElement>("plaque");
+  const beaver = one<HTMLElement>("beaver");
   const skip = one<HTMLElement>("skip");
   const stitches = all<HTMLElement>("stitch");
   const keys = all<HTMLElement>("key");
   const letters = all<SVGGElement>("letter");
   const count = wordmarkPaths.letters.length;
-  if (!sheet || !mark || !burst || !skip || keys.length !== count || letters.length !== count) return null;
-  return { root, sheet, stitches, keys, mark, letters, burst, skip };
+  if (!sheet || !mark || !cap || !burst || !plaque || !beaver || !skip) return null;
+  if (keys.length !== count || letters.length !== count) return null;
+  return { root, sheet, stitches, keys, mark, letters, cap, burst, plaque, beaver, skip };
 }
 
 /** Starts the intro on the server-rendered overlay; returns the effect cleanup. */
@@ -166,6 +180,7 @@ async function playIntro(parts: Parts, scope: Scope): Promise<void> {
   await desk(parts, scope);
   await drop(parts, layout, scope);
   await build(parts, layout, scope);
+  await present(parts, scope);
   await scope.sleep(LAND_HOLD_MS);
   await land(parts, layout, frame, scope);
 }
@@ -176,7 +191,17 @@ function reset(parts: Parts): void {
     parts.root.getAnimations({ subtree: true }).forEach((animation) => animation.cancel());
   }
   delete parts.root.dataset.exit;
-  const styled: Array<HTMLElement | SVGElement> = [parts.root, parts.sheet, parts.mark, parts.burst, parts.skip, ...parts.keys];
+  const styled: Array<HTMLElement | SVGElement> = [
+    parts.root,
+    parts.sheet,
+    parts.mark,
+    parts.cap,
+    parts.burst,
+    parts.plaque,
+    parts.beaver,
+    parts.skip,
+    ...parts.keys,
+  ];
   styled.forEach((el) => el.removeAttribute("style"));
 }
 
@@ -191,11 +216,27 @@ function px(el: HTMLElement | SVGElement, box: Box, frame: Box): void {
 function place(parts: Parts, layout: IntroLayout, frame: Box): void {
   px(parts.mark, layout.stage, frame);
   px(parts.burst, layout.burst, frame);
+  parts.plaque.style.top = `${layout.plaqueTop - frame.top}px`;
+  // The cap tips around the top of the S (viewBox units; the cap layer uses transform-box view-box).
+  parts.cap.style.transformOrigin = `${layout.capPivot.x}px ${layout.capPivot.y}px`;
+  hideCapLetters(parts.cap);
   parts.keys.forEach((key, i) => {
     const plan = layout.keys[i];
     key.style.left = `${plan.left - frame.left}px`;
     key.style.top = `${plan.top - frame.top}px`;
     key.style.width = `${layout.key}px`;
+  });
+}
+
+/**
+ * The cap layer is the hero's own <Wordmark cap />. Its letter polygons duplicate the flipping
+ * letters, so hide them and keep everything else (the cap). Matched by their points, so this
+ * holds however the Wordmark groups its drawing.
+ */
+function hideCapLetters(cap: SVGGElement): void {
+  const letters = new Set(wordmarkPaths.letters.map((letter) => toPointsAttr(letter.points)));
+  cap.querySelectorAll("polygon").forEach((polygon) => {
+    if (letters.has(polygon.getAttribute("points") ?? "")) polygon.style.visibility = "hidden";
   });
 }
 
@@ -248,7 +289,7 @@ function drop(parts: Parts, layout: IntroLayout, scope: Scope): Promise<void> {
 }
 
 // Step 3: keys slide home (the centre of their letter) and flip edge-on; the letter flips in
-// behind them. The burst pops with the last letter.
+// behind them. The cap drops onto the S once it has turned; the burst pops with the last letter.
 function build(parts: Parts, layout: IntroLayout, scope: Scope): Promise<void> {
   const last = parts.keys.length - 1;
   const runs = parts.keys.map(async (key, i) => {
@@ -279,8 +320,22 @@ function build(parts: Parts, layout: IntroLayout, scope: Scope): Promise<void> {
       ],
       { duration: FLIP_IN_MS, easing: "ease-out", fill: "forwards" },
     );
+    if (i === 0) void dropCap(parts, scope);
   });
   return Promise.all(runs).then(() => undefined);
+}
+
+// The cap falls a little way onto the S, tipped back, and rocks once as it settles.
+function dropCap(parts: Parts, scope: Scope): Promise<void> {
+  return scope.animate(
+    parts.cap,
+    [
+      { opacity: 1, transform: "translate(0px, -44px) rotate(-16deg)", easing: "cubic-bezier(0.55, 0, 1, 0.45)" },
+      { opacity: 1, transform: "translate(0px, 0px) rotate(4deg)", offset: 0.65, easing: "ease-out" },
+      { opacity: 1, transform: "translate(0px, 0px) rotate(0deg)" },
+    ],
+    { duration: CAP_MS, fill: "forwards" },
+  );
 }
 
 function popBurst(parts: Parts, scope: Scope): Promise<void> {
@@ -295,7 +350,32 @@ function popBurst(parts: Parts, scope: Scope): Promise<void> {
   );
 }
 
-// Step 4: FLIP the name onto #wordmark (translate plus one uniform scale), then peel the sheet
+// Step 4: the tagline plaque drops onto the desk under the name (from a little above the paper,
+// so it shrinks into place and tilts flat), then the beaver pops up from the bottom edge.
+function present(parts: Parts, scope: Scope): Promise<void> {
+  const plaque = scope.animate(
+    parts.plaque,
+    [
+      // Solid from the first frame (no see-through paper): only the scale and tilt carry the drop.
+      { opacity: 1, transform: "scale(1.3) rotate(-7deg)", easing: "cubic-bezier(0.55, 0, 1, 0.45)" },
+      { opacity: 1, transform: "scale(1) rotate(1.5deg)", offset: 0.6, easing: "ease-out" },
+      { opacity: 1, transform: "scale(1) rotate(0deg)" },
+    ],
+    { duration: PLAQUE_MS, fill: "forwards" },
+  );
+  const beaver = scope.animate(
+    parts.beaver,
+    [
+      { opacity: 1, transform: "translateY(100%)", easing: "cubic-bezier(0.2, 0.7, 0.3, 1)" },
+      { opacity: 1, transform: "translateY(-7%)", offset: 0.65, easing: "ease-in-out" },
+      { opacity: 1, transform: "translateY(0%)" },
+    ],
+    { duration: BEAVER_MS, delay: BEAVER_DELAY_MS, fill: "both" },
+  );
+  return Promise.all([plaque, beaver]).then(() => undefined);
+}
+
+// Step 5: FLIP the name onto #wordmark (translate plus one uniform scale), then peel the sheet
 // away from under it. With no usable target the overlay just fades.
 async function land(parts: Parts, layout: IntroLayout, frame: Box, scope: Scope): Promise<void> {
   const rect = document.querySelector(TARGET)?.getBoundingClientRect();

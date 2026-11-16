@@ -31,6 +31,10 @@ export type IntroLayout = {
   keys: KeyPlan[];
   /** The mint burst: a square behind the last letter's top-right corner. */
   burst: Box;
+  /** Top of the tagline plaque's row, just under the name, in overlay px. */
+  plaqueTop: number;
+  /** Pivot the cap lands around: top centre of the first letter, in viewBox units. */
+  capPivot: { x: number; y: number };
 };
 
 const KEY_ASPECT = 96 / 120;
@@ -115,9 +119,11 @@ export function planIntro(frame: Box, geometry: WordmarkGeometry): IntroLayout |
   const margin = 8;
   const keys: KeyPlan[] = [];
   let lastLetter: Box | null = null;
+  let capPivot = { x: 0, y: 0 };
   for (let i = 0; i < count; i++) {
     const box = bounds(geometry.letters[i].points);
     if (!box) return null;
+    if (i === 0) capPivot = { x: box.left + box.width / 2, y: box.top };
     const letter: Box = {
       left: stage.left + box.left * unit,
       top: stage.top + box.top * unit,
@@ -155,5 +161,7 @@ export function planIntro(frame: Box, geometry: WordmarkGeometry): IntroLayout |
     height: burstSize,
   };
 
-  return { aspect, stage, key, keys, burst };
+  const plaqueTop = stage.top + stage.height + clamp(stage.height * 0.12, 14, 28);
+
+  return { aspect, stage, key, keys, burst, plaqueTop, capPivot };
 }
