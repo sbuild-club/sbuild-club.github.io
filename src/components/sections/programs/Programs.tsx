@@ -17,7 +17,7 @@ export function Programs() {
     <section id="programs" data-surface="light" className="bg-paper px-4 py-24 text-ink sm:px-8 sm:py-32 lg:px-16">
       <div className="mx-auto max-w-7xl">
         <div className="flex items-end justify-between gap-6 border-b-2 border-ink pb-6">
-          <SectionHeading cursor title={title} />
+          <SectionHeading title={title} />
           <span aria-hidden="true" className="shrink-0 font-pixel text-sm leading-none">
             [{count}]
           </span>

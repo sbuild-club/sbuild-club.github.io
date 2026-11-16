@@ -1,74 +1,136 @@
 @import "tailwindcss";
 
+/* Tokens: docs/reference/design-tokens.json. Components never type a hex value or a font name;
+   they use these through Tailwind classes or var(--token). */
 :root {
-  --ink: #0e0e10;
-  --paper: #f2eee6;
-  --signal: #ff5b1f;
-  --amber: #ffaf00;
-  --phosphor: #7cff6b;
-  --font-display: var(--font-unbounded), sans-serif;
-  --font-body: var(--font-plex-sans), sans-serif;
-  --font-mono: var(--font-plex-mono), monospace;
-  --font-pixel: var(--font-silkscreen), monospace;
+  --cream: #f8efd6;
+  --sage: #b8d7ae;
+  --sage-soft: #d2e0bf;
+  --mint: #87c896;
+  --steel: #4c7e94;
+  --teal-mid: #396275;
+  --teal: #2f5565;
+  --navy: #2a3d5a;
+  --bark: #625045;
+  --bark-deep: #382e27;
+  --blush: #deb39e;
+
+  --font-display: var(--font-bungee), "Arial Black", sans-serif;
+  --font-label: var(--font-fredoka), "Trebuchet MS", sans-serif;
+  --font-body: var(--font-nunito), "Segoe UI", sans-serif;
+
+  /* The flat second paper layer sits this far down and right of a card, button or plaque. */
+  --layer-offset: 6px;
+
+  /* Stitch lines: always a pair of dashed rows. */
+  --stitch-dash: 30px;
+  --stitch-gap: 14px;
+  --stitch-weight: 6px;
+  --stitch-row-gap: 10px;
+
+  /* Hand-cut outlines (clip-path). Cards, buttons and plaques use a-c and the plaque;
+     tags, event slips and the small square key button use the rest. */
+  --cut-a: polygon(1% 5%, 99% 0%, 100% 94%, 2% 100%);
+  --cut-b: polygon(0% 2%, 97% 4%, 100% 98%, 3% 95%);
+  --cut-c: polygon(2% 0%, 100% 6%, 98% 100%, 0% 93%);
+  --cut-plaque: polygon(
+    1% 22%,
+    9% 2%,
+    27% 14%,
+    40% 0%,
+    62% 10%,
+    74% 2%,
+    97% 8%,
+    100% 46%,
+    98% 84%,
+    76% 92%,
+    60% 100%,
+    44% 90%,
+    30% 100%,
+    7% 94%,
+    0% 74%
+  );
+  --cut-tag-a: polygon(2% 8%, 98% 0%, 100% 90%, 0% 100%);
+  --cut-tag-b: polygon(0% 0%, 97% 10%, 100% 100%, 3% 88%);
+  --cut-slip-a: polygon(0% 6%, 100% 0%, 99% 92%, 1% 100%);
+  --cut-slip-b: polygon(1% 0%, 99% 8%, 100% 100%, 0% 90%);
+  --cut-key: polygon(4% 8%, 98% 0%, 100% 92%, 0% 100%);
+
+  /* Surface-dependent values. [data-surface] below swaps them; they inherit, so nesting works. */
+  --focus-ring: var(--navy);
+  --numeral: var(--steel);
+
   --z-intro: 100;
 }
 
-/* Only the five tokens and four families exist as Tailwind colours/fonts. */
+/* Only these eleven colours and three families exist as Tailwind colours/fonts
+   (plus Tailwind's own transparent and current). */
 @theme inline {
   --color-*: initial;
-  --color-ink: var(--ink);
-  --color-paper: var(--paper);
-  --color-signal: var(--signal);
-  --color-amber: var(--amber);
-  --color-phosphor: var(--phosphor);
+  --color-cream: var(--cream);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+  --color-mint: var(--mint);
+  --color-steel: var(--steel);
+  --color-teal-mid: var(--teal-mid);
+  --color-teal: var(--teal);
+  --color-navy: var(--navy);
+  --color-bark: var(--bark);
+  --color-bark-deep: var(--bark-deep);
+  --color-blush: var(--blush);
   --font-*: initial;
-  --font-display: var(--font-unbounded), sans-serif;
-  --font-body: var(--font-plex-sans), sans-serif;
-  --font-mono: var(--font-plex-mono), monospace;
-  --font-pixel: var(--font-silkscreen), monospace;
-  --default-font-family: var(--font-plex-sans), sans-serif;
-  --default-mono-font-family: var(--font-plex-mono), monospace;
-}
-
-@theme {
-  --animate-blink: blink 1.06s steps(1, end) infinite;
-
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
-  }
+  --font-display: var(--font-bungee), "Arial Black", sans-serif;
+  --font-label: var(--font-fredoka), "Trebuchet MS", sans-serif;
+  --font-body: var(--font-nunito), "Segoe UI", sans-serif;
+  --default-font-family: var(--font-nunito), "Segoe UI", sans-serif;
 }
 
 /* html[data-intro] is set before first paint by the gate script in layout.tsx. */
 @custom-variant intro-pending (html[data-intro="pending"] &);
 @custom-variant intro-done (html[data-intro="done"] &);
 
-@utility scanlines {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--paper) 4%, transparent) 0 1px,
-    transparent 1px 2px,
-    color-mix(in srgb, var(--ink) 6%, transparent) 2px 3px,
-    transparent 3px 4px
-  );
+/* Cut shapes. Put them on a non-focusable element: clip-path also clips the focus outline. */
+@utility cut-a {
+  clip-path: var(--cut-a);
+}
+@utility cut-b {
+  clip-path: var(--cut-b);
+}
+@utility cut-c {
+  clip-path: var(--cut-c);
+}
+@utility cut-plaque {
+  clip-path: var(--cut-plaque);
+}
+@utility cut-tag-a {
+  clip-path: var(--cut-tag-a);
+}
+@utility cut-tag-b {
+  clip-path: var(--cut-tag-b);
+}
+@utility cut-slip-a {
+  clip-path: var(--cut-slip-a);
+}
+@utility cut-slip-b {
+  clip-path: var(--cut-slip-b);
+}
+@utility cut-key {
+  clip-path: var(--cut-key);
 }
 
-@utility stepped-gradient {
-  background-image: linear-gradient(
-    to bottom,
-    var(--signal) 0 20%,
-    color-mix(in srgb, var(--signal) 50%, var(--amber)) 20% 40%,
-    var(--amber) 40% 60%,
-    color-mix(in srgb, var(--amber) 50%, var(--paper)) 60% 80%,
-    var(--paper) 80% 100%
-  );
+/* Dash pattern for SVG stitch strokes (<line>, <circle>, <path>). Colour with stroke-*. */
+@utility stitch-stroke {
+  fill: none;
+  stroke-width: var(--stitch-weight);
+  stroke-dasharray: var(--stitch-dash) var(--stitch-gap);
+  stroke-linecap: round;
 }
 
 @layer base {
   html {
-    background-color: var(--ink);
-    color-scheme: dark;
+    background-color: var(--cream);
+    color: var(--navy);
+    color-scheme: light;
     scrollbar-gutter: stable;
   }
 
@@ -78,24 +140,44 @@
 
   body {
     overflow-x: clip;
+    font-size: 1.0625rem;
+    line-height: 1.6;
   }
 
   section[id] {
     scroll-margin-top: 5rem;
   }
 
+  /* Teal and navy bands (and teal cards) carry data-surface="dark"; cream, sage and sage-soft
+     are light. A light surface nested inside a dark one sets data-surface="light". */
+  [data-surface="dark"] {
+    --focus-ring: var(--cream);
+    --numeral: var(--mint);
+  }
+
+  [data-surface="light"] {
+    --focus-ring: var(--navy);
+    --numeral: var(--steel);
+  }
+
   :focus-visible {
-    outline: 2px solid var(--amber);
+    outline: 3px solid var(--focus-ring);
     outline-offset: 3px;
   }
 
-  [data-surface="light"] :focus-visible {
-    outline-color: var(--ink);
+  ::selection {
+    background-color: var(--navy);
+    color: var(--cream);
   }
 
-  ::selection {
-    background-color: var(--signal);
-    color: var(--ink);
+  [data-surface="dark"] ::selection {
+    background-color: var(--cream);
+    color: var(--navy);
+  }
+
+  [data-surface="dark"] [data-surface="light"] ::selection {
+    background-color: var(--navy);
+    color: var(--cream);
   }
 }
 

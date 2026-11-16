@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Intro } from "@/components/intro/Intro";
-import { Scanlines } from "@/components/pixel/Scanlines";
 import { site } from "@/content/site";
 import { fontVariables } from "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sbuild-club.github.io"),
   title: site.name,
   description: site.hero.mission,
 };
@@ -24,10 +24,9 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: introGate }} />
       </head>
-      <body className="bg-ink font-body text-paper antialiased">
+      <body className="bg-cream font-body text-navy antialiased">
         <Intro />
         {children}
-        <Scanlines />
       </body>
     </html>
   );

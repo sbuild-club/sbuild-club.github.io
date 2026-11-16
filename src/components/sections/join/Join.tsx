@@ -12,14 +12,14 @@ export function Join() {
     >
       {/* Decorative: straddles the section's top edge, breaking the grid. */}
       <span aria-hidden="true" className="absolute -top-4 right-4 sm:right-12 lg:right-[18%]">
-        <Sticker tilt={-3} tone="amber">
+        <Sticker tilt={-3} tone="mint">
           {site.name}
         </Sticker>
       </span>
 
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16">
         <div className="flex max-w-3xl flex-col gap-6 wrap-anywhere">
-          <SectionHeading cursor title={site.join.headline} />
+          <SectionHeading title={site.join.headline} />
           <p className="max-w-xl text-lg leading-relaxed lowercase sm:text-xl">{site.join.body}</p>
         </div>
 

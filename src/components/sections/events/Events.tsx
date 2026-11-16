@@ -8,7 +8,7 @@ export function Events() {
   return (
     <section id="events" className="px-4 py-20 sm:px-8 md:py-28 lg:px-16">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading cursor title={title} />
+        <SectionHeading title={title} />
 
         {/* Terminal window: offset right on wide screens to break the grid. */}
         <div className="mt-10 border-2 border-paper shadow-[6px_6px_0_var(--amber)] md:mt-14 lg:ml-[12%]">

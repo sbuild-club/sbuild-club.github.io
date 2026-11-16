@@ -1,4 +1,4 @@
-import { PixelIcon } from "@/components/pixel/PixelIcon";
+import { ProjectIcon } from "@/components/art/ProjectIcon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Sticker } from "@/components/ui/Sticker";
 import { Tag } from "@/components/ui/Tag";
@@ -11,12 +11,12 @@ export function Projects() {
   return (
     <section id="projects" className="px-4 py-24 sm:px-8 sm:py-32 lg:px-16">
       <div className="mx-auto max-w-7xl">
-        <SectionHeading cursor title={title} />
+        <SectionHeading title={title} />
 
         <div className="relative mt-12 sm:mt-16">
           {/* Breaks the grid: straddles the top edge, rotated. */}
           <span aria-hidden="true" className="absolute -top-4 right-4 z-10 sm:right-10">
-            <Sticker tilt={-3} tone="signal">
+            <Sticker tilt={-3} tone="teal">
               {count}
             </Sticker>
           </span>
@@ -27,7 +27,7 @@ export function Projects() {
               <li key={i} className="flex min-h-64 flex-col gap-10 bg-ink p-6 wrap-break-word sm:p-8">
                 <div className="flex items-start justify-between gap-4">
                   <span className="text-amber">
-                    <PixelIcon name={project.icon} size={48} />
+                    <ProjectIcon name={project.icon} size={48} />
                   </span>
                   <span aria-hidden="true" className="font-pixel text-xs leading-none text-paper/60">
                     {String(i + 1).padStart(2, "0")}

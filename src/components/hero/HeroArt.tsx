@@ -1,5 +1,5 @@
-import { Mascot } from "@/components/pixel/Mascot";
-import { PixelIcon } from "@/components/pixel/PixelIcon";
+import { Beaver } from "@/components/art/Beaver";
+import { ProjectIcon } from "@/components/art/ProjectIcon";
 import styles from "./Hero.module.css";
 
 const BAR_CELLS = 10;
@@ -14,7 +14,7 @@ export function HeroArt() {
     <div aria-hidden="true" className="relative border-2 border-paper bg-ink p-5 shadow-[6px_6px_0_var(--signal)] sm:p-6">
       {/* Breaks the frame: sits across the top border. */}
       <div className="absolute -top-9 right-5 sm:right-8">
-        <Mascot />
+        <Beaver size={64} />
       </div>
 
       {/* Pixel stars. */}
@@ -24,7 +24,7 @@ export function HeroArt() {
       <span className="absolute top-[38%] left-[54%] size-1 bg-amber" />
 
       <div className={styles.float}>
-        <PixelIcon name="rocket" size={128} className="text-signal" />
+        <ProjectIcon name="rocket" size={128} className="text-signal" />
       </div>
 
       <div className="mt-6 grid grid-cols-10 gap-1">

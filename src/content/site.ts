@@ -1,13 +1,14 @@
-import type { PixelIconName } from "@/components/pixel/PixelIcon";
+import type { ProjectIconName } from "@/components/art/ProjectIcon";
 
 type Link = { label: string; href: string };
 type Program = { number: string; name: string; description: string };
-type Project = { name: string; tags: string[]; icon: PixelIconName };
+type Project = { name: string; tags: string[]; icon: ProjectIconName };
 type ClubEvent = { date: string; name: string; location: string };
 type Member = { name: string; role: string; initials: string };
 
 export type Site = {
   name: string;
+  tagline: string;
   nav: { links: [Link, Link, Link, Link]; cta: Link };
   hero: {
     headlineLines: [string, string, string];
@@ -26,6 +27,7 @@ export type Site = {
 
 export const site: Site = {
   name: "sbuild",
+  tagline: "SBU's First Tech Entrepreneurship Club",
   nav: {
     links: [
       { label: "programs", href: "#programs" },

@@ -1,4 +1,3 @@
-import { GridFloor } from "@/components/pixel/GridFloor";
 import { Button } from "@/components/ui/Button";
 import { Sticker } from "@/components/ui/Sticker";
 import { site } from "@/content/site";
@@ -29,8 +28,6 @@ export function Hero() {
         ))}
       </div>
 
-      <GridFloor />
-
       <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-7xl grid-cols-1 content-between gap-y-12 px-4 pt-10 pb-16 sm:px-6 md:grid-cols-12 md:gap-x-6 md:pt-14 md:pb-20 lg:px-10">
         <div className="min-w-0 md:col-span-12">
           <div className="flex flex-wrap items-start">
@@ -46,7 +43,7 @@ export function Hero() {
               href={site.nav.cta.href}
               className="relative z-10 -ml-2 shrink-0 self-start sm:-ml-4 motion-safe:transition-transform motion-safe:hover:-translate-y-0.5"
             >
-              <Sticker tilt={-3} tone="amber">
+              <Sticker tilt={-3} tone="mint">
                 {site.nav.cta.label}
                 <span aria-hidden="true"> →</span>
               </Sticker>
@@ -79,7 +76,7 @@ export function Hero() {
               {site.hero.primaryCta.label}
               <span aria-hidden="true">→</span>
             </Button>
-            <Button href={site.hero.secondaryCta.href} variant="ghost">
+            <Button href={site.hero.secondaryCta.href} variant="secondary">
               {site.hero.secondaryCta.label}
             </Button>
           </div>
