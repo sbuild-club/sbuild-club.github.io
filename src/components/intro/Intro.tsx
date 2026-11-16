@@ -1,15 +1,24 @@
 "use client";
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
-import { site } from "@/content/site";
-import { BOOT_LINES } from "./bootLines";
+import { Burst } from "@/components/art/Burst";
+import { Keycap } from "@/components/art/Keycap";
+import { toPointsAttr, wordmarkPaths, type WordmarkFill } from "@/components/art/wordmarkPaths";
 import { endIntro, getIntroState, getServerIntroState, subscribeIntroState } from "./introState";
 import { startIntro } from "./timeline";
 
+// Static class names so Tailwind can see them.
+const FILLS: Record<WordmarkFill, string> = {
+  navy: "fill-navy",
+  steel: "fill-steel",
+};
+
 /**
- * First-visit intro overlay. The server renders it hidden unless html[data-intro="pending"],
- * so it is visible from the first paint with zero layout shift; the timeline lives in
- * ./timeline and only starts from the effect below.
+ * First-visit intro overlay: a cream desk, keycaps that drop and flip into the wordmark, which
+ * then lands on the hero's #wordmark while the sheet peels away. The server renders it hidden
+ * unless html[data-intro="pending"], so it is visible from the first paint with zero layout
+ * shift. Every moving part starts invisible (opacity-0) and is sized and placed by ./timeline,
+ * which only starts from the effect below.
  */
 export function Intro() {
   const state = useSyncExternalStore(subscribeIntroState, getIntroState, getServerIntroState);
@@ -23,43 +32,54 @@ export function Intro() {
 
   if (state === "done") return null;
 
+  const { width, height } = wordmarkPaths.viewBox;
+
   return (
-    <div ref={rootRef} className="fixed inset-0 z-(--z-intro) hidden bg-ink intro-pending:block">
+    <div ref={rootRef} className="fixed inset-0 z-(--z-intro) hidden bg-cream intro-pending:block data-exit:bg-transparent">
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-        <div data-part="scan" className="scanlines absolute inset-0" />
-        <div
-          data-part="terminal"
-          className="absolute left-4 top-4 font-mono text-sm leading-relaxed text-phosphor sm:left-8 sm:top-8 sm:text-base"
+        {/* The desk: one cream sheet carrying the stitches and the burst; it peels away at the end. */}
+        <div data-part="sheet" className="absolute inset-0 origin-top-left bg-cream">
+          <svg data-part="stitch" focusable="false" className="absolute top-5 left-0 block h-[22px] w-[72%] opacity-0 sm:top-7">
+            <line x1="3" y1="3" x2="100%" y2="3" className="stitch-stroke stroke-sage-soft" />
+            <line x1="3" y1="19" x2="100%" y2="19" className="stitch-stroke stroke-sage-soft" />
+          </svg>
+          <svg data-part="stitch" focusable="false" className="absolute right-0 bottom-5 block h-[22px] w-[72%] opacity-0 sm:bottom-7">
+            <line x1="3" y1="3" x2="100%" y2="3" className="stitch-stroke stroke-sage-soft" />
+            <line x1="3" y1="19" x2="100%" y2="19" className="stitch-stroke stroke-sage-soft" />
+          </svg>
+          <div data-part="burst" className="absolute top-0 left-0 opacity-0">
+            <Burst className="h-auto w-full" />
+          </div>
+        </div>
+        {wordmarkPaths.letters.map((letter, i) => (
+          <div key={i} data-part="key" className="absolute top-0 left-0 opacity-0">
+            <Keycap letter={letter.char} className="h-auto w-full" />
+          </div>
+        ))}
+        {/* The landing wordmark: same viewBox as the hero's, its own polygons so each letter can flip. */}
+        <svg
+          data-part="mark"
+          viewBox={`0 0 ${width} ${height}`}
+          overflow="visible"
+          focusable="false"
+          className="absolute top-0 left-0 block origin-top-left"
         >
-          {BOOT_LINES.map((_, i) => (
-            <p key={i} className="whitespace-pre">
-              <span data-part="line" />
-              <span data-part="cursor" hidden className="motion-safe:animate-blink">
-                █
-              </span>
-            </p>
+          {wordmarkPaths.letters.map((letter, i) => (
+            <g key={i} data-part="letter" className="origin-center opacity-0 [transform-box:fill-box]">
+              <polygon points={toPointsAttr(letter.points)} fillRule="evenodd" className={FILLS[letter.fill]} />
+            </g>
           ))}
-        </div>
-        <canvas data-part="blocks" className="absolute inset-0 h-full w-full" />
-        <canvas data-part="wipe" className="absolute inset-0 h-full w-full opacity-0" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span
-            data-part="word"
-            aria-hidden
-            className="whitespace-nowrap font-display text-[length:clamp(3.5rem,20vw,13rem)] font-bold leading-none tracking-tight text-paper lowercase opacity-0"
-          >
-            {site.name}
-          </span>
-        </div>
-        <div data-part="beam" className="absolute inset-0 bg-paper opacity-0" />
+        </svg>
       </div>
       <button
         type="button"
         data-part="skip"
         onClick={endIntro}
-        className="absolute bottom-4 right-4 min-h-11 border-2 border-paper bg-ink px-4 font-pixel text-xs lowercase text-paper hover:bg-paper hover:text-ink sm:bottom-8 sm:right-8"
+        className="group absolute top-14 right-2 inline-flex min-h-11 min-w-11 items-center justify-center p-1 sm:top-16 sm:right-6"
       >
-        skip ↵
+        <span className="cut-tag-a bg-teal px-4 py-2 font-label text-[15px] leading-[1.2] font-semibold tracking-[0.06em] text-cream group-hover:bg-navy group-active:translate-y-px">
+          skip <span aria-hidden="true">↵</span>
+        </span>
       </button>
     </div>
   );
