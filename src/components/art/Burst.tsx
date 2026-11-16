@@ -1,5 +1,6 @@
-// STUB (foundation). Replaced by the art lane: a mint ray burst (cut-paper rays around an empty
-// centre), used for emphasis. Props and root element are frozen (docs/CONTRACT.md §2).
+// A mint ray burst: long thin cut-paper wedges around an empty centre, wide at the outside and
+// pointed at the middle, of uneven length (as around the banner's bulb). Props and root element
+// are frozen (docs/CONTRACT.md §2).
 import { cx } from "@/components/ui/cx";
 
 type BurstProps = {
@@ -8,6 +9,17 @@ type BurstProps = {
   /** Layout, size and transform classes only. */
   className?: string;
 };
+
+const rays = [
+  "49,30 44,1 56,2",
+  "61,34 80,8 88,15",
+  "68,46 98,36 99,48",
+  "67,58 96,72 90,82",
+  "56,68 66,98 54,99",
+  "43,67 26,94 17,87",
+  "33,56 2,64 1,51",
+  "34,42 6,22 13,13",
+];
 
 export function Burst({ size = 100, className }: BurstProps) {
   return (
@@ -20,12 +32,9 @@ export function Burst({ size = 100, className }: BurstProps) {
       className={cx("block", className)}
     >
       <g className="fill-mint">
-        <polygon points="46,30 50,0 56,30" />
-        <polygon points="70,46 100,44 70,54" />
-        <polygon points="54,70 52,100 44,70" />
-        <polygon points="30,54 0,52 30,46" />
-        <polygon points="64,34 88,10 70,40" />
-        <polygon points="36,66 12,90 30,60" />
+        {rays.map((points, i) => (
+          <polygon key={i} points={points} />
+        ))}
       </g>
     </svg>
   );

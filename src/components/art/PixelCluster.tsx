@@ -1,5 +1,6 @@
-// STUB (foundation). Replaced by the art lane: a small cluster of steel pixel squares, quiet
-// filler for empty corners. Props and root element are frozen (docs/CONTRACT.md §2).
+// A small cluster of steel pixel squares (quiet filler for empty corners), as at the banner's left
+// edge: square paper chips on a loose grid, each a hair off square. Props and root element are
+// frozen (docs/CONTRACT.md §2).
 import { cx } from "@/components/ui/cx";
 
 export type PixelClusterPattern = "tee" | "plus" | "row";
@@ -35,6 +36,20 @@ const cells: Record<PixelClusterPattern, ReadonlyArray<readonly [number, number]
   ],
 };
 
+// Per-chip corner nudges (in units, kept inside the 18-unit cell) so no two chips are identical.
+const nudges: ReadonlyArray<readonly [number, number, number, number]> = [
+  [0.4, 0, 0, 0.6],
+  [0, 0.5, 0.6, 0],
+  [0.5, 0.3, 0, 0],
+  [0, 0, 0.5, 0.5],
+  [0.3, 0.6, 0.2, 0],
+];
+
+function chip(x: number, y: number, i: number): string {
+  const [a, b, c, d] = nudges[i % nudges.length];
+  return `${x + a},${y} ${x + 18},${y + b} ${x + 18 - c},${y + 18} ${x},${y + 18 - d}`;
+}
+
 const heights: Record<PixelClusterPattern, number> = { tee: 40, plus: 62, row: 18 };
 
 export function PixelCluster({ pattern = "tee", size = 64, className }: PixelClusterProps) {
@@ -51,7 +66,7 @@ export function PixelCluster({ pattern = "tee", size = 64, className }: PixelClu
     >
       <g className="fill-steel">
         {cells[pattern].map(([x, y], i) => (
-          <rect key={i} x={x} y={y} width="18" height="18" />
+          <polygon key={i} points={chip(x, y, i)} />
         ))}
       </g>
     </svg>

@@ -1,5 +1,6 @@
-// STUB (foundation). Replaced by the art lane: lightbulb with a raised fist inside, optional ray
-// burst. Props and root element are frozen (docs/CONTRACT.md §2).
+// The idea bulb from the banner: a crooked cut-paper bulb with a raised fist cut out of it in
+// cream, three base stripes, and an optional burst of long thin rays pointing in at it.
+// Props and root element are frozen (docs/CONTRACT.md §2).
 import { cx } from "@/components/ui/cx";
 
 type LightbulbProps = {
@@ -21,8 +22,19 @@ const tones = {
   steel: "fill-steel",
 } as const;
 
-export function Lightbulb({ rays = false, tone = "mint", size, title, className }: LightbulbProps) {
-  const box = rays ? { x: 0, y: 0, w: 200, h: 120 } : { x: 60, y: 14, w: 80, h: 96 };
+// Long thin wedges, wide at the outside, tips aimed at the bulb (uneven lengths, as cut by hand).
+const rays = [
+  "70,50 4,40 6,56",
+  "72,32 26,4 18,14",
+  "70,68 14,86 20,98",
+  "88,18 74,0 86,0",
+  "132,48 196,34 198,50",
+  "128,28 164,2 174,10",
+  "132,66 184,92 178,104",
+];
+
+export function Lightbulb({ rays: withRays = false, tone = "mint", size, title, className }: LightbulbProps) {
+  const box = withRays ? { x: 0, y: 0, w: 200, h: 120 } : { x: 60, y: 14, w: 80, h: 96 };
   const width = size ?? box.w;
   const a11y = title ? { role: "img" as const, "aria-label": title } : { "aria-hidden": true as const };
 
@@ -36,27 +48,19 @@ export function Lightbulb({ rays = false, tone = "mint", size, title, className 
       {...a11y}
     >
       <g className={tones[tone]}>
-        {rays ? (
-          <>
-            <polygon points="66,52 8,44 6,60" />
-            <polygon points="70,34 30,6 22,18" />
-            <polygon points="70,68 20,92 28,102" />
-            <polygon points="136,50 194,40 196,56" />
-            <polygon points="132,32 170,2 178,12" />
-            <polygon points="134,66 182,88 176,98" />
-          </>
-        ) : null}
-        <polygon points="86,22 114,20 128,38 124,62 112,72 90,72 76,60 74,38" />
-        <rect x="88" y="78" width="26" height="6" transform="rotate(-10 101 81)" />
-        <rect x="90" y="88" width="22" height="6" transform="rotate(-10 101 91)" />
-        <rect x="93" y="98" width="16" height="6" transform="rotate(-10 101 101)" />
+        {withRays ? rays.map((points, i) => <polygon key={i} points={points} />) : null}
+        {/* bulb: a crooked octagon that narrows into the neck */}
+        <polygon points="85,19 113,17 129,31 131,51 120,64 115,75 89,77 85,66 73,55 71,34" />
+        {/* base: three stripes, each shorter, all tipped the same way */}
+        <polygon points="87,81 116,79 117,85 88,87" />
+        <polygon points="89,90 114,88 115,94 90,96" />
+        <polygon points="93,99 110,98 110,104 94,105" />
       </g>
+      {/* raised fist, cut out of the bulb: knuckles, fist, thumb fold, forearm */}
       <path
-        d="M92 34 v14 M99 32 v16 M106 34 v14 M112 40 v10 M92 48 h20 v8 h-14 v10"
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="fill-none stroke-cream"
+        d="M88 34 L91 29 L95 29 L96.5 31 L98 27.5 L102 27.5 L103 30 L104.5 27.5 L108.5 28 L109.5 31 L112 30.5 L114.5 33 L115 41 L112.5 48 L107.5 51.5 L107 68 L96 68.5 L95.5 52 L90 48.5 L87.5 41 Z M91 40.5 L106 39.5 L106.5 43.5 L91.5 44.5 Z"
+        fillRule="evenodd"
+        className="fill-cream"
       />
     </svg>
   );

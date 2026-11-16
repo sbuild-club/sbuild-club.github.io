@@ -1,6 +1,6 @@
-// STUB (foundation). Replaced by the art lane: large angled sage and sage-soft paper panels at
-// the left and/or right edge of a band, as in the banner. Props and root element are frozen
-// (docs/CONTRACT.md §2).
+// Large angled sage and sage-soft paper panels at the left and/or right edge of a band, as at the
+// banner's sides: two overlapping tints, each edge cut with a slight kink. Props and root element
+// are frozen (docs/CONTRACT.md §2).
 import { cx } from "@/components/ui/cx";
 
 type SidePanelsProps = {
@@ -24,8 +24,10 @@ export function SidePanels({ side = "both", className }: SidePanelsProps) {
           focusable="false"
           className="absolute inset-y-0 left-0 block h-full w-[16%]"
         >
-          <polygon points="0,0 220,0 120,600 0,600" className="fill-sage-soft" />
-          <polygon points="0,0 110,0 40,600 0,600" className="fill-sage" />
+          {/* soft outer panel: leans in toward the bottom, then kicks back out */}
+          <polygon points="0,0 236,0 150,372 214,600 0,600" className="fill-sage-soft" />
+          {/* sage inner strip */}
+          <polygon points="0,0 132,0 74,318 92,600 0,600" className="fill-sage" />
         </svg>
       ) : null}
       {side !== "left" ? (
@@ -35,8 +37,8 @@ export function SidePanels({ side = "both", className }: SidePanelsProps) {
           focusable="false"
           className="absolute inset-y-0 right-0 block h-full w-[16%]"
         >
-          <polygon points="300,0 80,0 180,600 300,600" className="fill-sage-soft" />
-          <polygon points="300,0 190,0 260,600 300,600" className="fill-sage" />
+          <polygon points="300,0 52,0 140,300 108,600 300,600" className="fill-sage-soft" />
+          <polygon points="300,0 176,0 238,170 214,600 300,600" className="fill-sage" />
         </svg>
       ) : null}
     </div>

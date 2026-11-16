@@ -1,5 +1,6 @@
-// STUB (foundation). Replaced by the art lane with the finished paper-cut avatar (round disc,
-// dashed stitch ring, initials). Props and root element are frozen (docs/CONTRACT.md §2).
+// A team avatar: a round paper disc with a dashed stitch ring sewn just inside its edge (as on the
+// badge) and the initials centred in the display face. Props and root element are frozen
+// (docs/CONTRACT.md §2).
 import { cx } from "@/components/ui/cx";
 
 export type AvatarTone = "sage" | "sage-soft" | "steel" | "teal" | "navy";
@@ -60,9 +61,9 @@ export function Avatar({ initials, size = 124, tone }: AvatarProps) {
         <circle
           cx="50"
           cy="50"
-          r="43"
-          strokeWidth="3"
-          strokeDasharray="7 5"
+          r="44"
+          strokeWidth="2.6"
+          strokeDasharray="6.5 4.5"
           strokeLinecap="round"
           className={cx("fill-none", rings[t])}
         />

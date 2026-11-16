@@ -1,5 +1,5 @@
-// STUB (foundation). Replaced by the art lane: a navy spiky, uneven star burst (second accent
-// shape, from the round logo). Props and root element are frozen (docs/CONTRACT.md §2).
+// A navy spiky star burst: eleven uneven points cut in one piece, as on the round logo.
+// Props and root element are frozen (docs/CONTRACT.md §2).
 import { cx } from "@/components/ui/cx";
 
 type StarBurstProps = {
@@ -20,7 +20,7 @@ export function StarBurst({ size = 96, className }: StarBurstProps) {
       className={cx("block", className)}
     >
       <polygon
-        points="50,0 58,34 92,18 68,46 100,60 64,64 72,100 48,72 18,94 32,60 0,48 34,42 20,8 46,30"
+        points="47,1 57,30 78,8 72,36 99,30 76,50 97,68 68,64 74,97 54,72 36,95 36,68 6,82 25,56 1,44 30,38 14,12 41,27"
         className="fill-navy"
       />
     </svg>
