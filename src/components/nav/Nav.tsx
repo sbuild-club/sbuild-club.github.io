@@ -1,41 +1,46 @@
+import { Badge } from "@/components/art/Badge";
 import { Button } from "@/components/ui/Button";
+import { StitchLine } from "@/components/ui/StitchLine";
 import { site } from "@/content/site";
 import { NavToggle } from "./NavToggle";
 
 /**
- * Sticky, compact primary nav (64px incl. its 2px rule). Wordmark left; section links in a panel
- * that collapses below md (toggled by the client NavToggle); "join" stays visible at every width.
+ * Sticky cream header (64px on phones, 76px from md). Brand link (round badge plus the name in the
+ * display face) on the left; the section links sit in a panel that collapses behind the cut-key
+ * menu button below md (toggled by the client NavToggle); "join" stays visible at every width.
+ * DOM order matches visual order: brand, menu button, links, join.
  */
 export function Nav() {
   return (
-    <header className="sticky top-0 z-50 h-16 border-b-2 border-paper bg-ink">
-      <nav aria-label="primary" className="mx-auto flex h-full max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-10">
-        <a href="#top" className="mr-auto font-display text-xl leading-none font-bold tracking-tighter lowercase hover:text-amber">
-          {site.name}
+    <header className="sticky top-0 z-50 bg-cream">
+      <nav
+        aria-label="primary"
+        className="relative mx-auto flex h-16 max-w-7xl items-center gap-2.5 px-4 sm:gap-4 sm:px-6 md:h-[76px] md:gap-6 lg:px-10"
+      >
+        <a href="#top" className="group mr-auto flex min-h-11 shrink-0 items-center gap-2.5 sm:gap-3">
+          <Badge size={52} className="h-auto w-11 shrink-0 md:w-[52px]" />
+          <span className="font-display text-[22px] leading-none text-navy uppercase group-hover:text-teal sm:text-2xl">
+            {site.name}
+          </span>
         </a>
 
         <NavToggle>
-          <ul className="flex flex-col md:flex-row md:items-center">
+          <ul className="flex flex-col md:flex-row md:items-center md:gap-1 lg:gap-4">
             {site.nav.links.map((link, i) => (
               <li key={i}>
                 <a
                   href={link.href}
-                  className="flex items-baseline gap-4 border-b border-paper/20 py-4 font-display text-3xl leading-none font-bold tracking-tighter lowercase hover:text-amber md:gap-0.5 md:border-0 md:px-3 md:py-2 md:font-mono md:text-sm md:font-normal md:tracking-normal"
+                  className="flex min-h-12 items-center font-label text-xl leading-[1.2] font-semibold tracking-[0.04em] text-navy hover:text-teal md:min-h-11 md:px-2 md:text-[17px]"
                 >
-                  <span aria-hidden="true" className="font-pixel text-xs font-normal tracking-normal text-paper/60 md:hidden">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span aria-hidden="true" className="hidden text-paper/60 md:inline">
-                    /
-                  </span>
                   {link.label}
                 </a>
               </li>
             ))}
           </ul>
+          <StitchLine className="mt-3 md:hidden" />
         </NavToggle>
 
-        <Button href={site.nav.cta.href} className="shrink-0">
+        <Button href={site.nav.cta.href} size="sm" className="shrink-0">
           {site.nav.cta.label}
         </Button>
       </nav>
