@@ -1,91 +1,69 @@
+import { SidePanels } from "@/components/art/SidePanels";
+import { Wordmark } from "@/components/art/Wordmark";
 import { Button } from "@/components/ui/Button";
-import { Sticker } from "@/components/ui/Sticker";
+import { Plaque } from "@/components/ui/Plaque";
+import { StitchLine } from "@/components/ui/StitchLine";
 import { site } from "@/content/site";
-import { HeroArt } from "./HeroArt";
+import { BannerArt } from "./BannerArt";
+import { CtaArt } from "./CtaArt";
 
-// One static class string per headline line (Tailwind scans literals). Offsets give the broken-line stack.
-const LINE_CLASSES = ["block", "block pl-[10%] text-amber md:pl-[24%]", "block pl-[4%] md:pl-[10%]"] as const;
-
-const GUIDE_COLUMNS = 12;
+// One static class string per headline line (Tailwind scans literals). The middle line is steel
+// and tilted from its left edge, as in the mockup.
+const LINE_CLASSES = ["block", "block origin-left -rotate-[1.5deg] text-steel", "block"] as const;
 
 /**
- * Hero (#top). Keeps the intro handoff contract: `h1#wordmark[data-intro-target]` holds only
- * `site.name`, and nothing in it or its ancestors is transformed, rotated or background-clipped.
- * The rotated sticker and the pixel frame (shifted across a column line) break the grid on purpose.
+ * Hero (#top). Two parts:
+ *
+ * 1. The banner, recomposed from live parts so it scales and the intro can land on it: sage side
+ *    panels, stitch lines top and bottom, the wordmark h1 (the intro's landing box), the tagline
+ *    plaque, scattered keycaps, pixel clusters, exclamation marks, the lightbulb burst and the
+ *    beaver peeking up at the bottom right.
+ * 2. The three-line headline, the mission and the two CTAs, with a keycap cluster on wide screens.
+ *
+ * Intro handoff (CONTRACT §2.6): `h1#wordmark[data-intro-target]` holds only the Wordmark svg and
+ * the sr-only name; its box is the svg's box. Nothing on it or its ancestors is transformed,
+ * clipped, filtered or faded. The top padding of the banner leaves room for the cap, which may
+ * rise above the svg by up to a quarter of its height.
  */
 export function Hero() {
-  const lastLine = site.hero.headlineLines.length - 1;
-
   return (
-    <section id="top" className="relative isolate overflow-hidden">
-      {/* Faint 12-column guides: the system the sticker and the pixel frame break. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 mx-auto hidden max-w-7xl grid-cols-12 gap-x-6 px-6 md:grid lg:px-10"
-      >
-        {Array.from({ length: GUIDE_COLUMNS }, (_, i) => (
-          <span key={i} className="border-x border-paper/[6%]" />
-        ))}
+    <section id="top" className="relative isolate">
+      <div className="relative isolate overflow-hidden px-4 pt-14 pb-24 sm:px-6 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-16">
+        <SidePanels className="hidden sm:block" />
+        <StitchLine className="absolute inset-x-0 top-3" />
+        <StitchLine className="absolute inset-x-0 bottom-3" />
+        <BannerArt />
+
+        <div className="relative flex flex-col items-center gap-5 sm:gap-6">
+          <h1 id="wordmark" data-intro-target className="w-[92%] max-w-[52rem] sm:w-[68%] lg:w-[54%]">
+            <Wordmark cap />
+            <span className="sr-only">{site.name}</span>
+          </h1>
+          <Plaque>{site.tagline}</Plaque>
+        </div>
       </div>
 
-      <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-7xl grid-cols-1 content-between gap-y-12 px-4 pt-10 pb-16 sm:px-6 md:grid-cols-12 md:gap-x-6 md:pt-14 md:pb-20 lg:px-10">
-        <div className="min-w-0 md:col-span-12">
-          <div className="flex flex-wrap items-start">
-            <h1
-              id="wordmark"
-              data-intro-target
-              className="font-display text-[clamp(2.75rem,12vw,11rem)] leading-[0.85] font-extrabold tracking-tighter text-signal lowercase"
-            >
-              {site.name}
-            </h1>
-            {/* Slapped-on sticker: rotated, overlapping the wordmark's corner. */}
-            <a
-              href={site.nav.cta.href}
-              className="relative z-10 -ml-2 shrink-0 self-start sm:-ml-4 motion-safe:transition-transform motion-safe:hover:-translate-y-0.5"
-            >
-              <Sticker tilt={-3} tone="mint">
-                {site.nav.cta.label}
-                <span aria-hidden="true"> →</span>
-              </Sticker>
-            </a>
-          </div>
-
-          <p className="mt-5 font-display text-[clamp(2.25rem,9vw,8rem)] leading-[0.92] font-bold tracking-tighter wrap-anywhere lowercase md:mt-8">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-12 px-4 pt-10 pb-14 sm:px-6 md:pt-16 md:pb-22 lg:px-10">
+        <div className="flex min-w-0 flex-[999_1_32rem] flex-col gap-5 sm:gap-7">
+          <p className="font-display text-[clamp(2.125rem,5.4vw,4.75rem)] leading-[1.02] tracking-[0.01em] wrap-anywhere text-navy uppercase">
             {site.hero.headlineLines.map((line, i) => (
               <span key={i} className={LINE_CLASSES[i]}>
                 {line}
-                {i === lastLine ? (
-                  <span aria-hidden="true" className="ml-[0.08em] inline-block text-signal intro-done:motion-safe:animate-blink">
-                    █
-                  </span>
-                ) : null}
               </span>
             ))}
           </p>
-        </div>
-
-        <div className="flex min-w-0 flex-col gap-6 self-end md:col-span-6">
-          <p className="max-w-[46ch] font-mono text-base leading-relaxed text-paper/80 lowercase sm:text-lg">
-            <span aria-hidden="true" className="text-amber">
-              {"> "}
-            </span>
-            {site.hero.mission}
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <Button href={site.hero.primaryCta.href}>
+          <p className="max-w-[35rem] text-lg leading-normal font-medium sm:text-xl">{site.hero.mission}</p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
+            <Button href={site.hero.primaryCta.href} className="w-full sm:w-auto">
               {site.hero.primaryCta.label}
-              <span aria-hidden="true">→</span>
             </Button>
-            <Button href={site.hero.secondaryCta.href} variant="secondary">
+            <Button href={site.hero.secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
               {site.hero.secondaryCta.label}
             </Button>
           </div>
         </div>
 
-        {/* Shifted left across the col-8 line. */}
-        <div className="min-w-0 self-end pt-6 md:col-span-5 md:col-start-8 md:-ml-10 md:pt-0 lg:-ml-20">
-          <HeroArt />
-        </div>
+        <CtaArt />
       </div>
     </section>
   );
