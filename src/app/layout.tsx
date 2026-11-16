@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Intro } from "@/components/intro/Intro";
 import { site } from "@/content/site";
 import { fontVariables } from "@/lib/fonts";
@@ -7,7 +7,17 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://sbuild-club.github.io"),
   title: site.name,
-  description: site.hero.mission,
+  description: site.tagline,
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: site.name,
+  },
+};
+
+// Browser UI colour = the cream token (--cream in globals.css). Metadata cannot read CSS variables.
+export const viewport: Viewport = {
+  themeColor: "#f8efd6",
 };
 
 // Runs before first paint: "pending" shows the intro overlay, "done" skips it.

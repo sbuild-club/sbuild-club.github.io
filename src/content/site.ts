@@ -23,6 +23,8 @@ export type Site = {
   team: [Member, Member, Member, Member, Member, Member];
   join: { headline: string; body: string; ctaLabel: string; ctaHref: string };
   footer: { socials: [Link, Link, Link, Link]; email: string };
+  /** Generic interface copy for the 404 page (not club facts). */
+  notFound: { code: string; heading: string; ctaLabel: string; ctaHref: string };
 };
 
 export const site: Site = {
@@ -87,5 +89,11 @@ export const site: Site = {
       { label: "github", href: "[GITHUB_URL]" },
     ],
     email: "[EMAIL]",
+  },
+  notFound: {
+    code: "404",
+    heading: "page not found",
+    ctaLabel: "back to the homepage",
+    ctaHref: "/",
   },
 };

@@ -111,8 +111,9 @@ Each letter is ONE closed polygon drawn with `fill-rule="evenodd"`; counters (B,
 
 ### 2.4 Mount points (frozen)
 
-- `layout.tsx`: `<html lang="en" className={fontVariables} suppressHydrationWarning>` → `<head>` holds the intro gate script (§2.6) → `<body className="bg-cream font-body text-navy antialiased">` → `<Intro />` first → `{children}`. `metadataBase` is `https://sbuild-club.github.io`. There is no scanline overlay any more.
+- `layout.tsx`: `<html lang="en" className={fontVariables} suppressHydrationWarning>` → `<head>` holds the intro gate script (§2.6) → `<body className="bg-cream font-body text-navy antialiased">` → `<Intro />` first → `{children}`. Metadata: `metadataBase` `https://sbuild-club.github.io`, `title` = `site.name`, `description` = `site.tagline`, `openGraph` `{ type: "website", url: "/", siteName: site.name }` (the deploy lane's `opengraph-image.*` supplies the image); `viewport.themeColor` is the cream value. There is no scanline overlay any more.
 - `page.tsx`: `<Nav />`, then `<main>` holding Hero, Manifesto, Programs, Projects, Events, Team, Join, then `<Footer />`.
+- `not-found.tsx` (exported as `out/404.html`, which GitHub Pages serves for unknown paths): `<Nav />`, a `<main>` on cream holding a large aria-hidden `site.notFound.code` in the display face with a tilted `Keycap`, the page's one `<h1>` (`site.notFound.heading`), a `StitchLine` and a `Button` to `site.notFound.ctaHref`, then `<Footer />`. All copy from `site.notFound`. There is no `#wordmark` there, so a first-visit intro skips its landing move and fades out (§2.6). Nav and footer links are in-page hashes (`#programs`, `#top`), so on the 404 page only the button and the external links lead away.
 
 ### 2.5 Sections, surfaces, headings
 
@@ -131,7 +132,7 @@ Each id sits on the component's outermost element and appears exactly once in th
 | Footer | `<footer data-surface="dark">` | — | navy | none |
 
 - Nav-label h2: `<SectionHeading title={site.nav.links.find((l) => l.href === "#programs")?.label ?? ""} />` (CSS uppercases it).
-- Exactly one `<h1>` on the page: Hero's `#wordmark`.
+- Exactly one `<h1>` on the home page: Hero's `#wordmark`. (The 404 page has its own single h1.)
 - **Surfaces.** `cream`: the default, no attribute. `sage` band: `bg-sage`, navy text, no attribute needed. `teal` or `navy` dark band: `bg-teal`/`bg-navy text-cream` plus `data-surface="dark"` on the outer element. A light element inside a dark band (event slips, cream cards) sets `data-surface="light"`; `PaperCard` and `Plaque` set theirs automatically. `data-surface` switches the focus ring, the selection colours and the `--numeral` colour.
 - Bands are divided by `StitchLine` pairs as in the mockup (cream stitches on sage and teal, sage-soft on cream, steel on navy).
 - Nav: sticky header at most 76px tall (sections have `scroll-margin-top: 5rem`). Links come from `site.nav.links` (`#programs`, `#projects`, `#events`, `#team`) plus `site.nav.cta` (`#join`). The "join" Button stays visible outside the collapsible panel at every width. The link panel is server-rendered (links always in the DOM) and toggled by the client `NavToggle` (`<button aria-expanded aria-controls>`, at least 44×44px; closes on link click and on Escape). With JS off a collapsed mobile panel is acceptable.
@@ -179,7 +180,8 @@ Each id sits on the component's outermost element and appears exactly once in th
 - Sticker text reuses site values: Hero → `site.nav.cta.label`; Projects → `` `${String(site.projects.length).padStart(2, "0")} ×` `` or a project tag; Join → `site.name`.
 - Footer labels are only `site.footer.socials[i].label`, `site.footer.email` and `back to top`.
 - Key list items by index (`key={i}`); values may repeat once real copy lands.
-- `site` shape: `name`; `tagline`; `nav {links[4] {label,href}, cta {label,href}}`; `hero {headlineLines[3], mission, primaryCta {label,href}, secondaryCta {label,href}}`; `manifesto {statements[4]}`; `programs[3] {number,name,description}`; `projects[6] {name, tags: string[], icon: ProjectIconName}`; `events[4] {date,name,location}`; `team[6] {name,role,initials}`; `join {headline, body, ctaLabel, ctaHref}`; `footer {socials[4] {label,href}, email}`.
+- `site` shape: `name`; `tagline`; `nav {links[4] {label,href}, cta {label,href}}`; `hero {headlineLines[3], mission, primaryCta {label,href}, secondaryCta {label,href}}`; `manifesto {statements[4]}`; `programs[3] {number,name,description}`; `projects[6] {name, tags: string[], icon: ProjectIconName}`; `events[4] {date,name,location}`; `team[6] {name,role,initials}`; `join {headline, body, ctaLabel, ctaHref}`; `footer {socials[4] {label,href}, email}`; `notFound {code, heading, ctaLabel, ctaHref}`.
+- `site.notFound` is generic interface copy for the 404 page, not club facts: `code` "404", `heading` "page not found", `ctaLabel` "back to the homepage", `ctaHref` "/".
 
 ## 3. Tokens (`src/app/globals.css`, frozen)
 
@@ -249,6 +251,7 @@ Values from `docs/reference/design-tokens.json`. Tailwind's default palette and 
 
 - Hex values, font loader names and the fallback stacks in `src/app/globals.css` and `src/lib/fonts.ts`: these ARE the tokens.
 - `metadataBase: new URL("https://sbuild-club.github.io")` in `layout.tsx`.
+- `viewport.themeColor: "#f8efd6"` in `layout.tsx`: it is the cream token's value, typed literally because metadata cannot read CSS variables. Keep it in step with `--cream`.
 - The intro gate `<script>` and `suppressHydrationWarning` in `layout.tsx`.
 - Arbitrary non-colour values: `z-[90]`, `text-[clamp(…)]`, `pr-(--layer-offset)`, `text-[13px]`, `tracking-[0.06em]`.
 - Numeric inline `style` sizes in art (e.g. Avatar's width, height and font size).
