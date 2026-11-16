@@ -46,7 +46,7 @@ All illustration is flat inline SVG in the palette, drawn as cut paper.
 
 ## Logo
 
-- `assets/Logos/sbuild-banner.png` is the wide banner: wordmark, tagline plaque, keycaps, beaver. Use it for hero compositions and share images.
+- `docs/reference/sbuild-banner.png` is the wide banner: wordmark, tagline plaque, keycaps, beaver. Use it for hero compositions and share images.
 - The round badge (arced wordmark over the beaver, inside a stitch ring) is the compact mark for the header, favicon and footer.
 - Keep clear space of one keycap width around either mark. Do not recolour, outline or add shadows to them.
 
