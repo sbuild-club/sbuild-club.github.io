@@ -1,54 +1,55 @@
-import { PixelIcon } from "@/components/pixel/PixelIcon";
+import { ProjectIcon } from "@/components/art/ProjectIcon";
+import { StarBurst } from "@/components/art/StarBurst";
+import { PaperCard } from "@/components/ui/PaperCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Sticker } from "@/components/ui/Sticker";
 import { Tag } from "@/components/ui/Tag";
 import { site } from "@/content/site";
 
+type Cut = "a" | "b" | "c";
+
+// Tiles cycle the three card cuts so neighbours never share an outline.
+const tileCuts: readonly Cut[] = ["a", "b", "c"];
+
+// Tags alternate tone and cut. Both tones differ from the sage-soft tile they sit on.
+const tagStyles = [
+  { tone: "teal", cut: "a" },
+  { tone: "cream", cut: "b" },
+] as const;
+
+// Three columns only from xl: below 1280px a third of the row is too narrow for a long single
+// word in a title (a 16-letter word in the display face needs about 270px at 24px).
 export function Projects() {
   const title = site.nav.links.find((l) => l.href === "#projects")?.label ?? "";
-  const count = `${String(site.projects.length).padStart(2, "0")} ×`;
 
   return (
-    <section id="projects" className="px-4 py-24 sm:px-8 sm:py-32 lg:px-16">
-      <div className="mx-auto max-w-7xl">
-        <SectionHeading cursor title={title} />
-
-        <div className="relative mt-12 sm:mt-16">
-          {/* Breaks the grid: straddles the top edge, rotated. */}
-          <span aria-hidden="true" className="absolute -top-4 right-4 z-10 sm:right-10">
-            <Sticker tilt={-3} tone="signal">
-              {count}
-            </Sticker>
-          </span>
-
-          {/* The 2px gaps reveal the background, drawing a raw 2px rule between every tile at any column count. */}
-          <ul className="grid grid-cols-1 gap-0.5 border-2 border-paper/30 bg-paper/30 md:grid-cols-2 lg:grid-cols-3">
-            {site.projects.map((project, i) => (
-              <li key={i} className="flex min-h-64 flex-col gap-10 bg-ink p-6 wrap-break-word sm:p-8">
-                <div className="flex items-start justify-between gap-4">
-                  <span className="text-amber">
-                    <PixelIcon name={project.icon} size={48} />
-                  </span>
-                  <span aria-hidden="true" className="font-pixel text-xs leading-none text-paper/60">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <div className="mt-auto flex flex-col gap-4">
-                  <h3 className="font-display text-xl leading-tight font-bold tracking-tight lowercase sm:text-2xl">
-                    {project.name}
-                  </h3>
-                  <ul className="flex flex-wrap gap-2 text-paper/80">
-                    {project.tags.map((tag, j) => (
-                      <li key={j}>
-                        <Tag>{tag}</Tag>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
-            ))}
-          </ul>
+    <section id="projects" className="relative px-4 py-16 sm:px-10 sm:py-24">
+      <StarBurst className="absolute top-10 right-4 h-auto w-16 rotate-6 sm:top-14 sm:right-[6%] sm:w-24" />
+      <div className="mx-auto max-w-[1200px]">
+        {/* The right padding keeps the heading clear of the star burst. */}
+        <div className="mb-8 pr-20 sm:mb-10 sm:pr-32">
+          <SectionHeading title={title} tone="steel" />
         </div>
+        <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-7">
+          {site.projects.map((project, i) => (
+            <PaperCard key={i} as="li" cut={tileCuts[i % tileCuts.length]} tone="sage-soft">
+              <ProjectIcon name={project.icon} size={64} className="block shrink-0 text-steel" />
+              {/* display-card at the mockup's 24px for tile titles. */}
+              <h3 className="font-display text-2xl leading-[1.15] font-normal wrap-break-word uppercase">{project.name}</h3>
+              <ul className="mt-auto flex flex-wrap gap-2 pt-1">
+                {project.tags.map((tag, j) => {
+                  const style = tagStyles[(i + j) % tagStyles.length];
+                  return (
+                    <li key={j} className="flex max-w-full">
+                      <Tag tone={style.tone} cut={style.cut}>
+                        {tag}
+                      </Tag>
+                    </li>
+                  );
+                })}
+              </ul>
+            </PaperCard>
+          ))}
+        </ul>
       </div>
     </section>
   );

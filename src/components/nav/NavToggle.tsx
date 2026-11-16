@@ -10,9 +10,10 @@ type NavToggleProps = {
 };
 
 /**
- * Mobile disclosure for the primary nav. Renders the toggle button and the panel that wraps the
- * server-rendered links. From md up the button is hidden and the panel is always shown inline.
- * Closes on link click, on a click outside the panel, on Escape and when focus leaves the panel.
+ * Mobile disclosure for the primary nav: the cut-key menu button (48px) and the panel that wraps
+ * the server-rendered links. From md up the button is hidden and the panel shows inline.
+ * Closes on link click, on a click outside the panel, on Escape (focus returns to the button)
+ * and when focus leaves the panel. Without JS the panel stays collapsed below md.
  */
 export function NavToggle({ children }: NavToggleProps) {
   const [open, setOpen] = useState(false);
@@ -21,6 +22,8 @@ export function NavToggle({ children }: NavToggleProps) {
 
   useEffect(() => {
     if (!open) return;
+
+    const panel = panelRef.current;
 
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Escape") return;
@@ -33,18 +36,17 @@ export function NavToggle({ children }: NavToggleProps) {
       if (!(target instanceof Element)) return;
       // The button toggles itself.
       if (buttonRef.current?.contains(target)) return;
-      const insidePanel = panelRef.current?.contains(target) ?? false;
+      const insidePanel = panel?.contains(target) ?? false;
       if (!insidePanel || target.closest("a")) setOpen(false);
     }
 
-    // Tabbing out of the panel (e.g. on to "join") closes it, so it never covers the next focus target.
+    // Tabbing out of the panel (on to "join") closes it, so it never covers the next focus target.
     function onFocusOut(event: FocusEvent) {
       const next = event.relatedTarget;
       if (next instanceof Node && (panel?.contains(next) || buttonRef.current?.contains(next))) return;
       setOpen(false);
     }
 
-    const panel = panelRef.current;
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("click", onClick);
     panel?.addEventListener("focusout", onFocusOut);
@@ -64,35 +66,27 @@ export function NavToggle({ children }: NavToggleProps) {
         aria-expanded={open}
         aria-controls={PANEL_ID}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex size-10 shrink-0 items-center justify-center border-2 border-paper hover:border-amber hover:bg-amber hover:text-ink aria-expanded:bg-paper aria-expanded:text-ink md:hidden"
+        className="group relative inline-flex size-12 shrink-0 cursor-pointer items-center justify-center text-cream md:hidden"
       >
-        <svg
-          viewBox="0 0 16 16"
-          width={16}
-          height={16}
-          shapeRendering="crispEdges"
-          fill="currentColor"
+        {/* The cut is on a child, so the focus ring on the button stays whole. */}
+        <span
           aria-hidden="true"
+          className="absolute inset-0 bg-teal cut-key group-hover:bg-navy group-aria-expanded:bg-navy"
+        />
+        <svg
+          viewBox="0 0 24 24"
+          width={24}
+          height={24}
+          aria-hidden="true"
+          focusable="false"
+          className="relative block group-active:translate-y-0.5 motion-safe:transition-transform"
         >
-          {open ? (
-            <>
-              <rect x="2" y="2" width="2" height="2" />
-              <rect x="4" y="4" width="2" height="2" />
-              <rect x="6" y="6" width="4" height="4" />
-              <rect x="10" y="10" width="2" height="2" />
-              <rect x="12" y="12" width="2" height="2" />
-              <rect x="12" y="2" width="2" height="2" />
-              <rect x="10" y="4" width="2" height="2" />
-              <rect x="4" y="10" width="2" height="2" />
-              <rect x="2" y="12" width="2" height="2" />
-            </>
-          ) : (
-            <>
-              <rect x="1" y="3" width="14" height="2" />
-              <rect x="1" y="7" width="14" height="2" />
-              <rect x="1" y="11" width="10" height="2" />
-            </>
-          )}
+          <path
+            d={open ? "M5 5 L19 19 M19 5 L5 19" : "M3 6 L21 5 M3 12 L21 12 M3 18 L21 19"}
+            strokeWidth="3"
+            strokeLinecap="round"
+            className="fill-none stroke-current"
+          />
         </svg>
       </button>
 
@@ -100,7 +94,7 @@ export function NavToggle({ children }: NavToggleProps) {
         ref={panelRef}
         id={PANEL_ID}
         data-open={open}
-        className="absolute inset-x-0 top-[calc(100%+2px)] hidden max-h-[calc(100svh-4rem)] overflow-y-auto border-b-2 border-paper bg-ink px-4 pt-2 pb-6 data-[open=true]:block sm:px-6 md:static md:block md:max-h-none md:overflow-visible md:border-0 md:bg-transparent md:p-0"
+        className="absolute inset-x-0 top-full hidden max-h-[calc(100svh-4rem)] overflow-y-auto bg-cream px-4 pt-1 pb-4 data-[open=true]:block sm:px-6 md:static md:block md:max-h-none md:overflow-visible md:bg-transparent md:p-0"
       >
         {children}
       </div>

@@ -1,0 +1,27 @@
+/* Beaver idle blink: the eyes squash shut for a moment, twice in quick succession now and then.
+   Runs only after the intro is done and only when motion is allowed; otherwise the eyes stay open. */
+
+.eye {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes beaver-blink {
+  0%,
+  88%,
+  92%,
+  94%,
+  100% {
+    transform: scaleY(1);
+  }
+  90%,
+  96% {
+    transform: scaleY(0.1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html[data-intro="done"]) .blink .eye {
+    animation: beaver-blink 5.6s ease-in-out infinite;
+  }
+}

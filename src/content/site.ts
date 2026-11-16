@@ -1,13 +1,14 @@
-import type { PixelIconName } from "@/components/pixel/PixelIcon";
+import type { ProjectIconName } from "@/components/art/ProjectIcon";
 
 type Link = { label: string; href: string };
 type Program = { number: string; name: string; description: string };
-type Project = { name: string; tags: string[]; icon: PixelIconName };
+type Project = { name: string; tags: string[]; icon: ProjectIconName };
 type ClubEvent = { date: string; name: string; location: string };
 type Member = { name: string; role: string; initials: string };
 
 export type Site = {
   name: string;
+  tagline: string;
   nav: { links: [Link, Link, Link, Link]; cta: Link };
   hero: {
     headlineLines: [string, string, string];
@@ -22,10 +23,13 @@ export type Site = {
   team: [Member, Member, Member, Member, Member, Member];
   join: { headline: string; body: string; ctaLabel: string; ctaHref: string };
   footer: { socials: [Link, Link, Link, Link]; email: string };
+  /** Generic interface copy for the 404 page (not club facts). */
+  notFound: { code: string; heading: string; ctaLabel: string; ctaHref: string };
 };
 
 export const site: Site = {
   name: "sbuild",
+  tagline: "SBU's First Tech Entrepreneurship Club",
   nav: {
     links: [
       { label: "programs", href: "#programs" },
@@ -85,5 +89,11 @@ export const site: Site = {
       { label: "github", href: "[GITHUB_URL]" },
     ],
     email: "[EMAIL]",
+  },
+  notFound: {
+    code: "404",
+    heading: "page not found",
+    ctaLabel: "back to the homepage",
+    ctaHref: "/",
   },
 };

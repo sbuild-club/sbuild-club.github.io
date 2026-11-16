@@ -1,13 +1,9 @@
-import { IBM_Plex_Mono, IBM_Plex_Sans, Silkscreen, Unbounded } from "next/font/google";
+import { Bungee, Fredoka, Nunito } from "next/font/google";
 
-const unbounded = Unbounded({ subsets: ["latin"], variable: "--font-unbounded", display: "swap" });
-const plexSans = IBM_Plex_Sans({ subsets: ["latin"], variable: "--font-plex-sans", display: "swap" });
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-plex-mono",
-  display: "swap",
-});
-const silkscreen = Silkscreen({ subsets: ["latin"], weight: "400", variable: "--font-silkscreen", display: "swap" });
+// Three families (docs/CONTRACT.md, "Tokens"): display, label, body.
+// Fredoka and Nunito are variable fonts, so every weight the type styles use is available.
+const bungee = Bungee({ subsets: ["latin"], weight: "400", variable: "--font-bungee", display: "swap" });
+const fredoka = Fredoka({ subsets: ["latin"], variable: "--font-fredoka", display: "swap" });
+const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito", display: "swap" });
 
-export const fontVariables = [unbounded, plexSans, plexMono, silkscreen].map((font) => font.variable).join(" ");
+export const fontVariables = [bungee, fredoka, nunito].map((font) => font.variable).join(" ");

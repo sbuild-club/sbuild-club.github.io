@@ -1,13 +1,23 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Intro } from "@/components/intro/Intro";
-import { Scanlines } from "@/components/pixel/Scanlines";
 import { site } from "@/content/site";
 import { fontVariables } from "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sbuild-club.github.io"),
   title: site.name,
-  description: site.hero.mission,
+  description: site.tagline,
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: site.name,
+  },
+};
+
+// Browser UI colour = the cream token (--cream in globals.css). Metadata cannot read CSS variables.
+export const viewport: Viewport = {
+  themeColor: "#f8efd6",
 };
 
 // Runs before first paint: "pending" shows the intro overlay, "done" skips it.
@@ -24,10 +34,9 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: introGate }} />
       </head>
-      <body className="bg-ink font-body text-paper antialiased">
+      <body className="bg-cream font-body text-navy antialiased">
         <Intro />
         {children}
-        <Scanlines />
       </body>
     </html>
   );

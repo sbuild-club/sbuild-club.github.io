@@ -1,32 +1,34 @@
-import { PixelAvatar } from "@/components/pixel/PixelAvatar";
+import { Avatar, type AvatarTone } from "@/components/art/Avatar";
+import { SidePanels } from "@/components/art/SidePanels";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { cx } from "@/components/ui/cx";
 import { site } from "@/content/site";
 
 const title = site.nav.links.find((l) => l.href === "#team")?.label ?? "";
 
+// A deliberate mix of disc colours and tilts, so the row looks laid down by hand (mockup order).
+const tones: readonly AvatarTone[] = ["sage", "steel", "teal", "sage-soft", "navy", "sage"];
+const tilts = ["-rotate-4", "rotate-3", "-rotate-2", "rotate-5", "-rotate-3", "rotate-2"] as const;
+
+/** Cream section with left side panels: round stitched avatars, each with a name and a role. */
 export function Team() {
   return (
-    <section id="team" data-surface="light" className="bg-paper px-4 py-20 text-ink sm:px-8 md:py-28 lg:px-16">
-      <div className="mx-auto max-w-7xl">
-        <SectionHeading cursor title={title} />
+    <section id="team" className="relative isolate px-4 py-20 sm:px-8 md:py-24 lg:px-10">
+      <SidePanels side="left" className="hidden lg:block" />
 
-        {/* 2 cols at 375, 3 at 768, 6 at 1440; even cards drop down for a staggered, off-grid rhythm. */}
-        <ul className="mt-10 grid grid-cols-2 items-start gap-x-4 gap-y-6 sm:gap-x-6 md:mt-14 md:grid-cols-3 md:gap-y-8 xl:grid-cols-6">
+      <div className="mx-auto max-w-[1200px]">
+        <SectionHeading title={title} className="mb-10 items-center text-center" />
+
+        <ul className="flex flex-wrap justify-center gap-x-5 gap-y-9 sm:gap-x-7">
           {site.team.map((member, i) => (
-            <li
-              key={i}
-              className="relative flex flex-col items-start gap-4 border-2 border-ink p-3 shadow-[4px_4px_0_var(--ink)] wrap-anywhere even:mt-6 sm:p-4 md:even:mt-10"
-            >
-              <span aria-hidden="true" className="absolute top-2 right-2 font-pixel text-xs leading-none text-ink/60">
-                {String(i + 1).padStart(2, "0")}
+            <li key={i} className="flex w-[148px] min-w-0 flex-col items-center gap-1.5 text-center sm:w-[168px]">
+              <span className={cx("flex", tilts[i % tilts.length])}>
+                <Avatar initials={member.initials} tone={tones[i % tones.length]} />
               </span>
-              <PixelAvatar initials={member.initials} size={96} />
-              <div className="flex flex-col gap-1.5">
-                <p className="font-display text-base leading-tight font-bold tracking-tight lowercase sm:text-lg">
-                  {member.name}
-                </p>
-                <p className="font-mono text-sm leading-snug text-ink/70 lowercase">{member.role}</p>
-              </div>
+              <p className="mt-2 max-w-full font-label text-lg leading-[1.2] font-semibold tracking-[0.03em] wrap-anywhere">
+                {member.name}
+              </p>
+              <p className="max-w-full text-sm leading-normal font-medium text-teal wrap-anywhere">{member.role}</p>
             </li>
           ))}
         </ul>
