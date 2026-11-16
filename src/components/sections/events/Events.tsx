@@ -1,55 +1,49 @@
+import { StitchLine } from "@/components/ui/StitchLine";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Tag } from "@/components/ui/Tag";
+import { cx } from "@/components/ui/cx";
 import { site } from "@/content/site";
 
 const title = site.nav.links.find((l) => l.href === "#events")?.label ?? "";
-const lastIndex = site.events.length - 1;
 
+// Neighbouring slips never share an outline; every other one steps in a little on wide screens.
+const slips = ["cut-slip-a", "cut-slip-b md:ml-[4%]"] as const;
+const tagCuts = ["a", "b"] as const;
+
+/** Teal notice board: cream paper slips with a navy date label, the event name and its location. */
 export function Events() {
   return (
-    <section id="events" className="px-4 py-20 sm:px-8 md:py-28 lg:px-16">
-      <div className="mx-auto max-w-6xl">
-        <SectionHeading title={title} />
+    <section id="events" data-surface="dark" className="bg-teal py-4 text-cream sm:py-5">
+      <StitchLine tone="cream" />
 
-        {/* Terminal window: offset right on wide screens to break the grid. */}
-        <div className="mt-10 border-2 border-paper shadow-[6px_6px_0_var(--amber)] md:mt-14 lg:ml-[12%]">
-          <div aria-hidden="true" className="flex items-center gap-3 border-b-2 border-paper px-4 py-2">
-            <span className="flex gap-1.5">
-              <span className="block size-2.5 bg-signal" />
-              <span className="block size-2.5 bg-amber" />
-              <span className="block size-2.5 bg-paper" />
-            </span>
-            <span className="min-w-0 truncate font-mono text-xs text-paper/60 lowercase">
-              $ {site.name} {title}
-            </span>
-          </div>
+      <div className="mx-auto max-w-[1040px] px-4 pt-11 pb-12 sm:px-8 md:py-[76px] lg:px-10">
+        <SectionHeading title={title} tilt={1} className="mb-7 md:mb-10" />
 
-          <ol className="flex flex-col gap-5 bg-ink px-4 py-6 font-mono text-sm text-phosphor lowercase sm:px-6 md:gap-4 md:py-8 md:text-base lg:text-lg">
-            {site.events.map((event, i) => (
-              <li key={i} className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-2 wrap-anywhere">
-                <span aria-hidden="true">&gt; </span>
-                <span className="flex flex-col gap-1 md:grid md:grid-cols-[minmax(0,14ch)_minmax(0,1fr)_minmax(0,18ch)] md:gap-x-6">
-                  <span>
-                    {event.date}
-                    <span className="sr-only">, </span>
-                  </span>
-                  <span>
-                    {event.name}
-                    <span className="sr-only">, </span>
-                  </span>
-                  <span className="text-phosphor/70">
-                    {event.location}
-                    {i === lastIndex ? (
-                      <span aria-hidden="true" className="ml-2 inline-block text-phosphor intro-done:motion-safe:animate-blink">
-                        █
-                      </span>
-                    ) : null}
-                  </span>
-                </span>
-              </li>
-            ))}
-          </ol>
-        </div>
+        <ol className="flex flex-col gap-[18px]">
+          {site.events.map((event, i) => (
+            <li
+              key={i}
+              data-surface="light"
+              className={cx(
+                "flex min-w-0 flex-col items-start gap-2 bg-cream px-5 pt-[18px] pb-5 text-navy sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2.5 sm:px-[26px] sm:pb-[18px]",
+                slips[i % slips.length],
+              )}
+            >
+              <Tag tone="navy" cut={tagCuts[i % tagCuts.length]} className="shrink-0">
+                {event.date}
+              </Tag>
+              <p className="max-w-full min-w-0 font-display text-2xl leading-[1.15] uppercase wrap-break-word sm:flex-[1_1_240px] sm:text-[26px]">
+                {event.name}
+              </p>
+              <p className="max-w-full min-w-0 text-sm leading-normal font-medium text-teal wrap-anywhere">
+                {event.location}
+              </p>
+            </li>
+          ))}
+        </ol>
       </div>
+
+      <StitchLine tone="cream" />
     </section>
   );
 }
