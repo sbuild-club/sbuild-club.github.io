@@ -40,7 +40,7 @@ export function NavToggle({ children }: NavToggleProps) {
       if (!insidePanel || target.closest("a")) setOpen(false);
     }
 
-    // Tabbing out of the panel (on to "join") closes it, so it never covers the next focus target.
+    // Tabbing out of the panel (on to the signup button) closes it, so it never covers the next focus target.
     function onFocusOut(event: FocusEvent) {
       const next = event.relatedTarget;
       if (next instanceof Node && (panel?.contains(next) || buttonRef.current?.contains(next))) return;

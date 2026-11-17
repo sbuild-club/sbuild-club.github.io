@@ -14,7 +14,7 @@ SBUILD is Stony Brook University's first tech entrepreneurship club. Everything 
 - Lay every page on `cream`. Use `sage` for full-width bands and the angled side panels, with `sage-soft` as the overlapping second layer.
 - Use `teal` for dark bands and plaques, with `cream` text.
 - Set body text in `navy`. Use `teal` for secondary text.
-- Use `steel` for the wordmark and for display type at 24px and up. Never set small text in `steel`.
+- Use `steel` for the wordmark and for display type and the hero slogan at 24px and up. Never set small text in `steel`.
 - `mint` is decoration only: bursts, exclamation marks, the bulb, keycap letters. Never text on a light ground.
 - `bark`, `bark-deep` and `blush` belong to the beaver. Do not use them for UI.
 - Fills are always solid. No gradients, no transparency effects, no blur, no outlines around shapes.
@@ -22,7 +22,7 @@ SBUILD is Stony Brook University's first tech entrepreneurship club. Everything 
 ## Type
 
 - `display-*` styles (Bungee) are for the hero line, section headings and card titles, in capitals. Tilt single words by 1 to 3 degrees; never tilt body copy.
-- `label-*` styles (Fredoka, weight 600, wide tracking) are for the tagline plaque, buttons, nav and tags.
+- `label-*` styles (Fredoka, weight 600, wide tracking) are for the tagline plaque, the hero pillars and slogan, buttons, nav and tags.
 - `body-*` styles (Nunito) are for everything else.
 - The SBUILD wordmark is artwork, not type. Never typeset it in the display face where the logo should be.
 

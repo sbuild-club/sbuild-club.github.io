@@ -8,15 +8,16 @@ import { rootHref } from "./rootHref";
 /**
  * Sticky cream header (64px on phones, 76px from md). Brand link (round badge plus the name in the
  * display face) on the left; the section links sit in a panel that collapses behind the cut-key
- * menu button below md (toggled by the client NavToggle); "join" stays visible at every width.
- * DOM order matches visual order: brand, menu button, links, join.
+ * menu button below md (toggled by the client NavToggle); the signup button stays visible at every
+ * width, with its short label below lg (the full label remains its accessible name).
+ * DOM order matches visual order: brand, menu button, links, signup.
  */
 export function Nav() {
   return (
     <header className="sticky top-0 z-50 bg-cream">
       <nav
         aria-label="primary"
-        className="relative mx-auto flex h-16 max-w-7xl items-center gap-2.5 px-4 sm:gap-4 sm:px-6 md:h-[76px] md:gap-6 lg:px-10"
+        className="relative mx-auto flex h-16 max-w-7xl items-center gap-2.5 px-4 sm:gap-4 sm:px-6 md:h-[76px] lg:gap-6 lg:px-10"
       >
         <a href={rootHref("#top")} className="group mr-auto flex min-h-11 shrink-0 items-center gap-2.5 sm:gap-3">
           <Badge size={52} className="h-auto w-11 shrink-0 md:w-[52px]" />
@@ -42,7 +43,10 @@ export function Nav() {
         </NavToggle>
 
         <Button href={rootHref(site.nav.cta.href)} size="sm" className="shrink-0">
-          {site.nav.cta.label}
+          <span aria-hidden="true" className="lg:hidden">
+            {site.nav.cta.shortLabel}
+          </span>
+          <span className="max-lg:sr-only">{site.nav.cta.label}</span>
         </Button>
       </nav>
     </header>
