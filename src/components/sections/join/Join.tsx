@@ -18,7 +18,14 @@ export function Join() {
         <div className="flex min-w-0 flex-col items-start gap-5 sm:gap-6 lg:flex-1 lg:pb-[88px]">
           <SectionHeading title={site.join.headline} className="max-w-full" />
           <p className="max-w-[520px] text-lg leading-normal font-medium wrap-anywhere sm:text-xl">{site.join.body}</p>
-          <Button href={site.join.ctaHref} size="lg" cut="c" className="mt-1 w-full sm:w-auto">
+          <Button
+            href={site.join.ctaHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            size="lg"
+            cut="c"
+            className="mt-1 w-full sm:w-auto"
+          >
             {site.join.ctaLabel}
           </Button>
         </div>

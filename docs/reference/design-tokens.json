@@ -8,7 +8,7 @@
       { "name": "sage", "value": "#b8d7ae", "usage": "Section bands and the large angled side panels. Navy text on it is 7.0:1, teal text 5.1:1." },
       { "name": "sage-soft", "value": "#d2e0bf", "usage": "Second, lighter panel layer that overlaps sage, and the dashed stitch lines on cream." },
       { "name": "mint", "value": "#87c896", "usage": "Decoration only: ray bursts, exclamation marks, the lightbulb, keycap letters on steel. Never text on cream or sage." },
-      { "name": "steel", "value": "#4c7e94", "usage": "Wordmark letters, keycap tops, pixel clusters, display type at 24px and up on cream (3.9:1, so never small text)." },
+      { "name": "steel", "value": "#4c7e94", "usage": "Wordmark letters, keycap tops, pixel clusters, display type and the hero slogan at 24px and up on cream (3.9:1, so never small text)." },
       { "name": "teal-mid", "value": "#396275", "usage": "Lighter side face of a keycap. Shading only." },
       { "name": "teal", "value": "#2f5565", "usage": "Plaques, dark bands, darker keycap face, secondary text on cream (7.0:1) and on sage (5.1:1)." },
       { "name": "navy", "value": "#2a3d5a", "usage": "Body text on cream, sage and sage-soft (9.5:1 on cream). The S of the wordmark, the beaver's cap, star bursts, focus ring." },
@@ -47,7 +47,7 @@
         "name": "Text",
         "family": "body",
         "styles": [
-          { "name": "body-lead", "fontSize": "20px", "lineHeight": 1.5, "fontWeight": 500, "usage": "Mission line and section intros. Navy." },
+          { "name": "body-lead", "fontSize": "20px", "lineHeight": 1.5, "fontWeight": 500, "usage": "Section intros. Navy." },
           { "name": "body", "fontSize": "17px", "lineHeight": 1.6, "fontWeight": 400, "usage": "Body copy. Navy on cream, sage or sage-soft; cream on teal." },
           { "name": "body-small", "fontSize": "14px", "lineHeight": 1.5, "fontWeight": 500, "usage": "Captions and footer text. Teal on cream, navy on sage." }
         ]

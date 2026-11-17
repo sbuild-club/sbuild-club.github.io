@@ -16,6 +16,7 @@ const tagStyles = [
   { tone: "cream", cut: "b" },
 ] as const;
 
+// While `site.projects` is empty the section shows one layered tile with `site.projectsNote`.
 // Three columns only from xl: below 1280px a third of the row is too narrow for a long single
 // word in a title (a 16-letter word in the display face needs about 270px at 24px).
 export function Projects() {
@@ -29,27 +30,36 @@ export function Projects() {
         <div className="mb-8 pr-20 sm:mb-10 sm:pr-32">
           <SectionHeading title={title} tone="steel" />
         </div>
-        <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-7">
-          {site.projects.map((project, i) => (
-            <PaperCard key={i} as="li" cut={tileCuts[i % tileCuts.length]} tone="sage-soft">
-              <ProjectIcon name={project.icon} size={64} className="block shrink-0 text-steel" />
-              {/* display-card at the mockup's 24px for tile titles. */}
-              <h3 className="font-display text-2xl leading-[1.15] font-normal wrap-break-word uppercase">{project.name}</h3>
-              <ul className="mt-auto flex flex-wrap gap-2 pt-1">
-                {project.tags.map((tag, j) => {
-                  const style = tagStyles[(i + j) % tagStyles.length];
-                  return (
-                    <li key={j} className="flex max-w-full">
-                      <Tag tone={style.tone} cut={style.cut}>
-                        {tag}
-                      </Tag>
-                    </li>
-                  );
-                })}
-              </ul>
-            </PaperCard>
-          ))}
-        </ul>
+        {site.projects.length === 0 ? (
+          <PaperCard cut="a" tone="sage-soft" layer className="max-w-xl">
+            <ProjectIcon name="wrench" size={64} className="block shrink-0 text-steel" />
+            <p className="font-display text-[length:clamp(1.75rem,5vw,2.75rem)] leading-[1.1] wrap-break-word uppercase">
+              {site.projectsNote}
+            </p>
+          </PaperCard>
+        ) : (
+          <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-7">
+            {site.projects.map((project, i) => (
+              <PaperCard key={i} as="li" cut={tileCuts[i % tileCuts.length]} tone="sage-soft">
+                <ProjectIcon name={project.icon} size={64} className="block shrink-0 text-steel" />
+                {/* display-card at the mockup's 24px for tile titles. */}
+                <h3 className="font-display text-2xl leading-[1.15] font-normal wrap-break-word uppercase">{project.name}</h3>
+                <ul className="mt-auto flex flex-wrap gap-2 pt-1">
+                  {project.tags.map((tag, j) => {
+                    const style = tagStyles[(i + j) % tagStyles.length];
+                    return (
+                      <li key={j} className="flex max-w-full">
+                        <Tag tone={style.tone} cut={style.cut}>
+                          {tag}
+                        </Tag>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </PaperCard>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );

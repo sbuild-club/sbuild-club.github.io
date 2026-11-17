@@ -5,19 +5,6 @@ import { Plaque } from "@/components/ui/Plaque";
 import { StitchLine } from "@/components/ui/StitchLine";
 import { site } from "@/content/site";
 import { BannerArt } from "./BannerArt";
-import { CtaArt } from "./CtaArt";
-
-// One static class string per headline line (Tailwind scans literals). The middle line is steel
-// and tilted 1.5deg, as in the mockup. It is only as wide as its text and turns about its centre,
-// so each end moves at most half a column width × tan(1.5deg) ≈ 0.16em (column ≤ 12em, see
-// below). Bungee caps rise 0.74em, so at leading 0.95 the gap between lines is 0.21em; the
-// 0.12em margin above and below raises that to 0.33em, enough that the tilted line never touches
-// its neighbours (brackets, which reach 0.80em up and 0.10em down, still clear by 0.19em).
-const LINE_CLASSES = [
-  "block",
-  "my-[0.12em] block w-fit max-w-full origin-center -rotate-[1.5deg] text-steel",
-  "block",
-] as const;
 
 /**
  * Hero (#top). Two parts:
@@ -26,7 +13,8 @@ const LINE_CLASSES = [
  *    panels, stitch lines top and bottom, the wordmark h1 (the intro's landing box), the tagline
  *    plaque, scattered keycaps, pixel clusters, exclamation marks, the lightbulb burst and the
  *    beaver peeking up at the bottom right.
- * 2. The three-line headline, the mission and the two CTAs, with a keycap cluster on wide screens.
+ * 2. One centred column, as in the middle of the print flyer: the three pillars (Build /
+ *    Community / Founding) in navy, the steel slogan below them, and the two CTAs centred under it.
  *
  * Intro handoff (CONTRACT §2.6): `h1#wordmark[data-intro-target]` holds only the Wordmark svg and
  * the sr-only name; its box is the svg's box. Nothing on it or its ancestors is transformed,
@@ -51,30 +39,30 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-12 px-4 pt-10 pb-14 sm:px-6 md:pt-16 md:pb-22 lg:px-10">
-        {/* The column is a size container: the headline is sized against the column itself
-            (8.3cqi = 1/12 of its width), so a 16-letter word (Bungee: ENTREPRENEURSHIP ≈ 11.3em)
-            always fits on one line from 375px up. Only strings wider than 12em break, as a last resort. */}
-        <div className="@container flex min-w-0 flex-[999_1_32rem] flex-col gap-5 sm:gap-7">
-          <p className="font-display text-[length:clamp(1.75rem,8.3cqi,4.75rem)] leading-[0.95] tracking-[0.01em] wrap-break-word text-navy uppercase">
-            {site.hero.headlineLines.map((line, i) => (
-              <span key={i} className={LINE_CLASSES[i]}>
-                {line}
-              </span>
-            ))}
-          </p>
-          <p className="max-w-[35rem] text-lg leading-normal font-medium sm:text-xl">{site.hero.mission}</p>
-          <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
-            <Button href={site.hero.primaryCta.href} className="w-full sm:w-auto">
-              {site.hero.primaryCta.label}
-            </Button>
-            <Button href={site.hero.secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
-              {site.hero.secondaryCta.label}
-            </Button>
-          </div>
+      {/* The column is a size container: the pillars and slogan scale with its width (cqi). Fredoka
+          widths: the longest pillar ("Build: Turn your ideas into real projects.") is about 18.1em,
+          the slogan about 11.2em at bold. 4.4cqi keeps the pillar at 80% of the column, so it stays
+          on one row wherever the size is not clamped; at the 22px floor it needs ~400px and wraps
+          to two rows below that. The slogan's 28px floor keeps steel text above 24px (contrast). */}
+      <div className="@container mx-auto flex max-w-5xl flex-col items-center gap-6 px-4 pt-10 pb-14 text-center sm:gap-8 sm:px-6 md:pt-16 md:pb-22 lg:px-10">
+        <ul className="flex flex-col gap-[0.6em] font-label text-[length:clamp(1.375rem,4.4cqi,2.25rem)] leading-[1.2] font-semibold text-balance text-navy">
+          {site.hero.pillars.map((p, i) => (
+            <li key={i}>
+              <strong className="font-bold">{p.label}:</strong> {p.text}
+            </li>
+          ))}
+        </ul>
+        <p className="font-label text-[length:clamp(1.75rem,6.6cqi,3.5rem)] leading-[1.1] font-bold text-balance text-steel">
+          {site.hero.mission}
+        </p>
+        <div className="flex w-full flex-col gap-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-5">
+          <Button href={site.hero.primaryCta.href} className="w-full sm:w-auto">
+            {site.hero.primaryCta.label}
+          </Button>
+          <Button href={site.hero.secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
+            {site.hero.secondaryCta.label}
+          </Button>
         </div>
-
-        <CtaArt />
       </div>
     </section>
   );

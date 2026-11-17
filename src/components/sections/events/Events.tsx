@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/Button";
 import { StitchLine } from "@/components/ui/StitchLine";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Tag } from "@/components/ui/Tag";
@@ -10,7 +11,11 @@ const title = site.nav.links.find((l) => l.href === "#events")?.label ?? "";
 const slips = ["cut-slip-a", "cut-slip-b md:ml-[4%]"] as const;
 const tagCuts = ["a", "b"] as const;
 
-/** Teal notice board: cream paper slips with a navy date label, the event name and its location. */
+/**
+ * Teal notice board: cream paper slips with a navy date label, the event name and its location.
+ * While `site.events` is empty it holds one slip instead: the open e-board role and a button to its
+ * application form (opens in a new tab).
+ */
 export function Events() {
   return (
     <section id="events" data-surface="dark" className="bg-teal py-4 text-cream sm:py-5">
@@ -19,28 +24,49 @@ export function Events() {
       <div className="mx-auto max-w-[1040px] px-4 pt-11 pb-12 sm:px-8 md:py-[76px] lg:px-10">
         <SectionHeading title={title} tilt={1} className="mb-7 md:mb-10" />
 
-        <ol className="flex flex-col gap-[18px]">
-          {site.events.map((event, i) => (
-            <li
-              key={i}
-              data-surface="light"
-              className={cx(
-                "flex min-w-0 flex-col items-start gap-2 bg-cream px-5 pt-[18px] pb-5 text-navy sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2.5 sm:px-[26px] sm:pb-[18px]",
-                slips[i % slips.length],
-              )}
+        {site.events.length === 0 ? (
+          <div
+            data-surface="light"
+            className="flex min-w-0 flex-col items-start gap-5 bg-cream px-5 pt-6 pb-7 text-navy cut-slip-a sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-8 sm:px-8 sm:py-8"
+          >
+            <p className="max-w-full min-w-0 font-display text-[length:clamp(1.75rem,5vw,2.75rem)] leading-[1.1] uppercase wrap-break-word">
+              {site.openRole.title}
+            </p>
+            <Button
+              href={site.openRole.cta.href}
+              size="lg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full shrink-0 sm:w-auto"
             >
-              <Tag tone="navy" cut={tagCuts[i % tagCuts.length]} className="shrink-0">
-                {event.date}
-              </Tag>
-              <p className="max-w-full min-w-0 font-display text-2xl leading-[1.15] uppercase wrap-break-word sm:flex-[1_1_240px] sm:text-[26px]">
-                {event.name}
-              </p>
-              <p className="max-w-full min-w-0 text-sm leading-normal font-medium text-teal wrap-anywhere">
-                {event.location}
-              </p>
-            </li>
-          ))}
-        </ol>
+              {site.openRole.cta.label}
+              <span aria-hidden="true">→</span>
+            </Button>
+          </div>
+        ) : (
+          <ol className="flex flex-col gap-[18px]">
+            {site.events.map((event, i) => (
+              <li
+                key={i}
+                data-surface="light"
+                className={cx(
+                  "flex min-w-0 flex-col items-start gap-2 bg-cream px-5 pt-[18px] pb-5 text-navy sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2.5 sm:px-[26px] sm:pb-[18px]",
+                  slips[i % slips.length],
+                )}
+              >
+                <Tag tone="navy" cut={tagCuts[i % tagCuts.length]} className="shrink-0">
+                  {event.date}
+                </Tag>
+                <p className="max-w-full min-w-0 font-display text-2xl leading-[1.15] uppercase wrap-break-word sm:flex-[1_1_240px] sm:text-[26px]">
+                  {event.name}
+                </p>
+                <p className="max-w-full min-w-0 text-sm leading-normal font-medium text-teal wrap-anywhere">
+                  {event.location}
+                </p>
+              </li>
+            ))}
+          </ol>
+        )}
       </div>
 
       <StitchLine tone="cream" />
