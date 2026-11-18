@@ -53,7 +53,7 @@ Which file to open:
 ## 3. Content: `src/content/site.ts`
 
 - Every visible string comes from the `site` object. Components hold no copy of their own beyond these fixed strings: `skip`, `back to top`, aria-labels (`primary`, `menu`), wordless glyphs (→ ↵ ↑), and the wordmark letters inside art.
-- The `Site` type fixes list lengths with tuples: 4 nav links, 3 hero pillars, 3 programs, 4 team members, 4 socials. Changing a count means editing the type and checking the component that renders it.
+- The `Site` type fixes list lengths with tuples: 3 nav links, 3 hero pillars, 3 programs, 4 team members, 3 socials. Changing a count means editing the type and checking the component that renders it.
 - Values in `[BRACKETS]` are placeholders and render as-is until real copy replaces them. Fill in only real club facts.
 - Empty lists switch sections automatically: `projects: []` shows one tile with `projectsNote`; `events: []` shows the open-role slip (`openRole`) instead of event slips. Adding the first project or event switches the section over.
 - **Section headings come from the nav labels**, looked up by href: Programs ← the `#programs` link, Projects ← `#projects` ("cohort program"), Events ← `#events` ("open role"), Team ← `#team`. Renaming a label renames both the nav link and the heading. Changing a link's `href` leaves that section with an empty heading, so change the section's lookup at the same time.
@@ -226,6 +226,6 @@ Edit `src/content/site.ts` only; the dev server updates as soon as you save.
 1. **Prepare the photo.** Crop it square with the face in the middle (the avatar is a circle and trims the corners), resize it to about 600×600 and save it as a JPG under ~150 KB. A phone photo straight off the camera is several MB, so always shrink it first: on a Mac, `sips -Z 600 photo.jpg` after cropping in Preview; anywhere else, squoosh.app.
 2. **Name it after the member** in lowercase, no spaces (`xiang.jpg`, or `jane-doe.jpg` if first names clash), and put it in `public/team/`. Do not leave the original at the repo root.
 3. **Point the member at it** in `src/content/site.ts`: `{ name: "Jane Doe", role: "…", initials: "JD", photo: "/team/jane-doe.jpg" }`. The path starts at `/team/`, not `/public/team/`.
-4. **Optional link.** Add `href: "https://…"` (a personal site, LinkedIn, GitHub) and the photo and name become one link that opens in a new tab: a dashed teal underline under the name with a thick teal arrow (`art/ArrowUpRight`) beside it; on hover the photo grows slightly, the name turns teal and the arrow flies out to the top right and back in from the bottom left.
+4. **Optional link.** Add `href: "https://…"` (a personal site, LinkedIn, GitHub) and the photo and name become one link that opens in a new tab: a dashed teal underline under the name with a thick teal arrow (`art/ArrowUpRight`) beside it; on hover the photo grows slightly and the name turns teal.
 
 The photo replaces the initials and sits inside the coloured disc with the stitch ring on the rim around it. Members without `photo` keep their initials.

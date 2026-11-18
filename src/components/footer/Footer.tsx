@@ -41,7 +41,13 @@ export function Footer() {
           <ul className="flex flex-wrap gap-x-6 sm:gap-x-7">
             {site.footer.socials.map((social, i) => (
               <li key={i}>
-                <a href={rootHref(social.href)} className="flex min-h-11 items-center text-cream hover:text-sage">
+                {/* Social profiles live on other sites: open them in a new tab so the page stays put. */}
+                <a
+                  href={rootHref(social.href)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex min-h-11 items-center text-cream hover:text-sage"
+                >
                   {social.label}
                 </a>
               </li>

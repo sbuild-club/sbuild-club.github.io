@@ -39,14 +39,13 @@ export function Team() {
               </span>
             );
             const nameClass =
-              "mt-2 max-w-full font-label text-lg leading-[1.2] font-semibold tracking-[0.03em] wrap-anywhere";
+              "mt-2 max-w-full font-label text-xl leading-[1.2] font-semibold tracking-[0.03em] wrap-anywhere sm:text-2xl";
 
             return (
               <li key={i} className="flex w-[156px] min-w-0 flex-col items-center gap-1.5 text-center sm:w-[208px]">
                 {member.href ? (
                   // Photo and name are one link, so either is a target. The name carries a dashed
-                  // teal underline (the stitch motif) and a thick teal arrow that flies out and back
-                  // on hover; the name turns teal on hover.
+                  // teal underline (the stitch motif) and a thick teal arrow, and turns teal on hover.
                   <a
                     href={member.href}
                     target="_blank"
@@ -58,7 +57,7 @@ export function Team() {
                       <span className="min-w-0 underline decoration-teal decoration-dashed decoration-2 underline-offset-[5px]">
                         {member.name}
                       </span>
-                      <ArrowUpRight className="text-teal" />
+                      <ArrowUpRight size={22} className="shrink-0 text-teal" />
                     </span>
                   </a>
                 ) : (
@@ -67,7 +66,9 @@ export function Team() {
                     <p className={nameClass}>{member.name}</p>
                   </>
                 )}
-                <p className="max-w-full text-sm leading-normal font-medium text-teal wrap-anywhere">{member.role}</p>
+                <p className="max-w-full text-lg leading-snug font-medium text-teal wrap-anywhere sm:text-xl">
+                  {member.role}
+                </p>
               </li>
             );
           })}

@@ -189,7 +189,7 @@ All art is flat inline SVG in the palette, drawn as cut paper, in `src/component
 | `PixelCluster` | Small chip clusters: `tee`, `plus`, `row` | steel | Hero banner |
 | `SidePanels` | Large angled sage and sage-soft panels at band edges | sage, sage-soft | Hero (both, from `sm`), Team (left, from `lg`) |
 | `ProjectIcon` | Eight icons: rocket, wrench, lightbulb, chip, terminal, satellite, flag, bolt | `currentColor` (steel on tiles) | Project tiles |
-| `ArrowUpRight` | Thick round-capped ↗ for links that leave the site; flies out and back in on hover (`animate-arrow-fly`, motion-safe) | `currentColor` (teal) | Team member links |
+| `ArrowUpRight` | Thick round-capped ↗ for links that leave the site (static) | `currentColor` (teal) | Team member links |
 | `Avatar` | Round disc with a stitch ring and initials, or a member photo set into the disc | sage, sage-soft, steel, teal or navy disc | Team |
 
 Size art with a width class plus `h-auto` (`className="h-auto w-[clamp(6rem,15vw,17.5rem)]"`). The `size` prop is the fallback width.

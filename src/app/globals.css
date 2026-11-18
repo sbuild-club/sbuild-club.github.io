@@ -85,29 +85,6 @@
   --default-font-family: var(--font-nunito), "Segoe UI", sans-serif;
 }
 
-/* animate-arrow-fly: ArrowUpRight leaves its box to the top right and comes back in from the
-   bottom left (its box clips the overflow), once per hover. */
-@theme {
-  --animate-arrow-fly: arrow-fly 0.6s both;
-
-  @keyframes arrow-fly {
-    0% {
-      transform: translate(0, 0);
-      animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
-    }
-    40% {
-      transform: translate(110%, -110%);
-    }
-    40.01% {
-      transform: translate(-110%, 110%);
-      animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    100% {
-      transform: translate(0, 0);
-    }
-  }
-}
-
 /* html[data-intro] is set before first paint by the gate script in layout.tsx. */
 @custom-variant intro-pending (html[data-intro="pending"] &);
 @custom-variant intro-done (html[data-intro="done"] &);

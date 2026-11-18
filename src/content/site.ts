@@ -53,7 +53,7 @@ export type Site = {
   openRole: { title: string; cta: Link };
   /** `body` is optional: leave it out (or comment it out) and the join section shows just the headline and button. */
   join: { headline: string; body?: string; ctaLabel: string; ctaHref: string };
-  footer: { newsletter: Link; socials: [Link, Link, Link, Link]; email: string };
+  footer: { newsletter: Link; socials: [Link, Link, Link]; email: string };
   /** Generic interface copy for the 404 page (not club facts). */
   notFound: { code: string; heading: string; ctaLabel: string; ctaHref: string };
 };
@@ -135,10 +135,9 @@ export const site: Site = {
   footer: {
     newsletter: { label: "sign up for our newsletter", href: newsletterForm },
     socials: [
-      { label: "instagram", href: "[INSTAGRAM_URL]" },
-      { label: "linkedin", href: "[LINKEDIN_URL]" },
-      { label: "discord", href: "[DISCORD_URL]" },
-      { label: "github", href: "[GITHUB_URL]" },
+      { label: "discord", href: "https://discord.gg/g7cnSprnpx" },
+      { label: "instagram", href: "https://www.instagram.com/sbuildclub/" },
+      { label: "linkedin", href: "https://www.linkedin.com/company/s-build-club/home/" },
     ],
     email: "clubsbuild@gmail.com",
   },
