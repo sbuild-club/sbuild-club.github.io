@@ -11,14 +11,24 @@ export type Site = {
   name: string;
   tagline: string;
   /** `cta.shortLabel` replaces `cta.label` below `lg`, where the full label does not fit beside the brand, menu button and links. */
-  nav: { links: [Link, Link, Link, Link]; cta: Link & { shortLabel: string } };
+  nav: {
+    /** The words beside the badge, read as "name: descriptor" (the nav adds the colon on one-line layouts). */
+    brand: { name: string; descriptor: string };
+    /** Three while the programs section is hidden; back to four (`#programs` first) when it returns. */
+    links: [Link, Link, Link];
+    cta: Link & { shortLabel: string };
+  };
   hero: {
     pillars: [Pillar, Pillar, Pillar];
     mission: string;
     primaryCta: Link;
     secondaryCta: Link;
   };
-  manifesto: { statements: [string, string, string, string] };
+  /**
+   * The mission block right under the hero: a display heading over short paragraphs. `lead` is set
+   * in bold and runs straight into the first paragraph; the last paragraph is the call-out.
+   */
+  manifesto: { heading: string; lead: string; paragraphs: [string, ...string[]] };
   programs: [Program, Program, Program];
   projects: Project[];
   /** Shown in the projects section while `projects` is empty. */
@@ -27,24 +37,30 @@ export type Site = {
   team: [Member, Member, Member, Member];
   /** The e-board seat that is open. Shown in the events section, with a link to its application form, while `events` is empty. */
   openRole: { title: string; cta: Link };
-  join: { headline: string; body: string; ctaLabel: string; ctaHref: string };
+  /** `body` is optional: leave it out (or comment it out) and the join section shows just the headline and button. */
+  join: { headline: string; body?: string; ctaLabel: string; ctaHref: string };
   footer: { newsletter: Link; socials: [Link, Link, Link, Link]; email: string };
   /** Generic interface copy for the 404 page (not club facts). */
   notFound: { code: string; heading: string; ctaLabel: string; ctaHref: string };
 };
 
+/** The newsletter sign-up form: the footer's newsletter button and the nav's signup button both open it. */
+const newsletterForm = "https://forms.gle/m8qa27jo8YkKS9nk6";
+
 export const site: Site = {
   name: "sbuild",
   tagline: "SBU's First Tech Entrepreneurship Club",
   nav: {
+    brand: { name: "Sbuild", descriptor: "Innovators & Founders Community" },
     links: [
-      { label: "programs", href: "#programs" },
+      // Hidden with the programs section (see page.tsx); restore both together.
+      // { label: "programs", href: "#programs" },
       { label: "cohort program", href: "#projects" },
       // Reads "open role" while the events section holds the application; back to "events" once events exist.
       { label: "open role", href: "#events" },
       { label: "team", href: "#team" },
     ],
-    cta: { label: "interest signup", shortLabel: "signup", href: "#join" },
+    cta: { label: "interest signup", shortLabel: "signup", href: newsletterForm },
   },
   hero: {
     pillars: [
@@ -58,7 +74,12 @@ export const site: Site = {
     secondaryCta: { label: "Open Eboard applications", href: "#events" },
   },
   manifesto: {
-    statements: ["[STATEMENT_1]", "[STATEMENT_2]", "[STATEMENT_3]", "[STATEMENT_4]"],
+    heading: "Mission",
+    lead: "Sbuild: Innovators & Founders Community",
+    paragraphs: [
+      "provides support, resources and community to launch ideas into something useful for people and find cofounders.",
+      "If you don't have ideas, join the community that incubates ideas and innovation, gain exposure to tech startups!",
+    ],
   },
   programs: [
     { number: "01", name: "[PROGRAM_1]", description: "[PROGRAM_1_DESCRIPTION]" },
@@ -81,13 +102,14 @@ export const site: Site = {
     cta: { label: "apply", href: "https://forms.gle/Yx4GFUrt3EgmdHLH6" },
   },
   join: {
-    headline: "[JOIN_HEADLINE]",
-    body: "[JOIN_BODY]",
+    headline: "LAUNCHING IN SPRING 2027",
+    // Hidden for now; uncomment to show a paragraph under the headline.
+    // body: "[JOIN_BODY]",
     ctaLabel: "interest signup",
     ctaHref: "https://forms.gle/nKBExRyn9YWgY2Tu8",
   },
   footer: {
-    newsletter: { label: "sign up for our newsletter", href: "https://forms.gle/m8qa27jo8YkKS9nk6" },
+    newsletter: { label: "sign up for our newsletter", href: newsletterForm },
     socials: [
       { label: "instagram", href: "[INSTAGRAM_URL]" },
       { label: "linkedin", href: "[LINKEDIN_URL]" },

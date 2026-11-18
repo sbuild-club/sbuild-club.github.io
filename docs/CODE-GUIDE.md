@@ -51,8 +51,8 @@ Which file to open:
 
 ## 3. Content: `src/content/site.ts`
 
-- Every visible string comes from the `site` object. Components hold no copy of their own beyond these fixed strings: `skip`, `back to top`, aria-labels (`primary`, `manifesto`, `menu`), wordless glyphs (→ ↵ ↑), and the wordmark letters inside art.
-- The `Site` type fixes list lengths with tuples: 4 nav links, 3 hero pillars, 4 manifesto statements, 3 programs, 4 team members, 4 socials. Changing a count means editing the type and checking the component that renders it.
+- Every visible string comes from the `site` object. Components hold no copy of their own beyond these fixed strings: `skip`, `back to top`, aria-labels (`primary`, `menu`), wordless glyphs (→ ↵ ↑), and the wordmark letters inside art.
+- The `Site` type fixes list lengths with tuples: 4 nav links, 3 hero pillars, 3 programs, 4 team members, 4 socials. Changing a count means editing the type and checking the component that renders it.
 - Values in `[BRACKETS]` are placeholders and render as-is until real copy replaces them. Fill in only real club facts.
 - Empty lists switch sections automatically: `projects: []` shows one tile with `projectsNote`; `events: []` shows the open-role slip (`openRole`) instead of event slips. Adding the first project or event switches the section over.
 - **Section headings come from the nav labels**, looked up by href: Programs ← the `#programs` link, Projects ← `#projects` ("cohort program"), Events ← `#events` ("open role"), Team ← `#team`. Renaming a label renames both the nav link and the heading. Changing a link's `href` leaves that section with an empty heading, so change the section's lookup at the same time.

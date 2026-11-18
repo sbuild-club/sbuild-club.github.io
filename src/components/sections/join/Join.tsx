@@ -17,7 +17,9 @@ export function Join() {
       <div className="mx-auto flex max-w-[1200px] flex-col gap-8 px-4 pt-11 sm:px-8 md:pt-[76px] lg:flex-row lg:items-end lg:px-10">
         <div className="flex min-w-0 flex-col items-start gap-5 sm:gap-6 lg:flex-1 lg:pb-[88px]">
           <SectionHeading title={site.join.headline} className="max-w-full" />
-          <p className="max-w-[520px] text-lg leading-normal font-medium wrap-anywhere sm:text-xl">{site.join.body}</p>
+          {site.join.body ? (
+            <p className="max-w-[520px] text-lg leading-normal font-medium wrap-anywhere sm:text-xl">{site.join.body}</p>
+          ) : null}
           <Button
             href={site.join.ctaHref}
             target="_blank"

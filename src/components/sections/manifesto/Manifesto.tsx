@@ -1,46 +1,41 @@
-import { Exclaim } from "@/components/art/Exclaim";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { StitchLine } from "@/components/ui/StitchLine";
 import { cx } from "@/components/ui/cx";
 import { site } from "@/content/site";
 
-// Staggered placement as in the mockup: left, right (tilted), left with the exclamation
-// marks, centre (tilted the other way). Colours alternate navy / teal / steel; steel is
-// fine here because the display size never drops below 26px. Static literals for Tailwind.
-const placements = [
-  "self-start text-navy",
-  "self-end text-right text-teal rotate-[1.5deg]",
-  "self-start text-steel",
-  "self-center text-center text-navy -rotate-1",
-] as const;
-
-// The statement that gets the mint exclamation marks beside it.
-const EXCLAIM_AT = 2;
-
+/**
+ * Mission band straight under the hero's CTAs, dressed like Programs: sage band with a cream
+ * stitch line inside its top and bottom edges. The display heading sits over short body-lead
+ * paragraphs, centred to continue the hero's centred column: the bold lead runs into the first,
+ * and the last (when there is more than one) is a teal Fredoka call-out.
+ */
 export function Manifesto() {
-  const { statements } = site.manifesto;
+  const { heading, lead, paragraphs } = site.manifesto;
+  const last = paragraphs.length - 1;
 
   return (
-    <section aria-label="manifesto" className="px-4 pt-2 pb-14 sm:px-10 sm:pt-6 sm:pb-24">
-      <ul className="mx-auto flex max-w-[1120px] flex-col gap-5 font-display text-[clamp(1.625rem,3.6vw,3.25rem)] leading-[1.1] uppercase sm:gap-7">
-        {statements.map((statement, i) => (
-          <li
-            key={i}
-            className={cx(
-              "max-w-full wrap-break-word sm:max-w-[85%]",
-              i === EXCLAIM_AT && "flex items-center gap-3 sm:gap-5",
-              placements[i % placements.length],
-            )}
-          >
-            {i === EXCLAIM_AT ? (
-              <>
-                <Exclaim className="h-auto w-9 shrink-0 sm:w-[52px]" />
-                <span className="min-w-0">{statement}</span>
-              </>
-            ) : (
-              statement
-            )}
-          </li>
-        ))}
-      </ul>
+    <section className="bg-sage py-4 text-navy sm:py-5">
+      <StitchLine tone="cream" />
+      <div className="mx-auto flex max-w-[46rem] flex-col items-center gap-5 px-4 py-11 text-center sm:gap-6 sm:px-10 sm:py-[76px]">
+        <SectionHeading title={heading} className="items-center text-center" />
+        <div className="flex flex-col gap-4 text-lg leading-normal font-medium text-pretty sm:gap-5 sm:text-xl">
+          {paragraphs.map((text, i) => (
+            <p
+              key={i}
+              className={cx(i > 0 && i === last && "font-label leading-[1.3] font-semibold tracking-[0.02em] text-teal")}
+            >
+              {i === 0 ? (
+                <>
+                  <strong className="font-extrabold">{lead}</strong> {text}
+                </>
+              ) : (
+                text
+              )}
+            </p>
+          ))}
+        </div>
+      </div>
+      <StitchLine tone="cream" />
     </section>
   );
 }

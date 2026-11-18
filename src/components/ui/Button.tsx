@@ -41,7 +41,7 @@ const layers: Record<Variant, string> = {
 };
 
 const sizes: Record<Size, string> = {
-  sm: "px-6 py-3 text-[17px]",
+  sm: "px-4 py-3 text-base sm:px-6 sm:text-[17px]",
   md: "px-[30px] py-4 text-lg",
   lg: "px-9 py-[18px] text-lg sm:text-xl",
 };

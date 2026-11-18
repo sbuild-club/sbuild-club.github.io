@@ -4,7 +4,8 @@ import { Nav } from "@/components/nav/Nav";
 import { Events } from "@/components/sections/events/Events";
 import { Join } from "@/components/sections/join/Join";
 import { Manifesto } from "@/components/sections/manifesto/Manifesto";
-import { Programs } from "@/components/sections/programs/Programs";
+// Programs is hidden for now; restore it together with its nav link in site.ts.
+// import { Programs } from "@/components/sections/programs/Programs";
 import { Projects } from "@/components/sections/projects/Projects";
 import { Team } from "@/components/sections/team/Team";
 
@@ -15,7 +16,7 @@ export default function Home() {
       <main>
         <Hero />
         <Manifesto />
-        <Programs />
+        {/* <Programs /> */}
         <Projects />
         <Events />
         <Team />

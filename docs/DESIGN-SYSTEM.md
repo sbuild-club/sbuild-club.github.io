@@ -45,13 +45,13 @@ A **surface** is the ground a block sits on. Dark surfaces carry `data-surface="
 
 | Surface | Background | `data-surface` | Body text | Secondary text | Headings | Stitch line | Focus ring | Used by |
 |---|---|---|---|---|---|---|---|---|
-| Cream (default) | `bg-cream` | (light) | navy | teal | navy, teal or steel | `sage-soft` | navy | Hero, Manifesto, Projects, Team, 404 |
-| Sage band | `bg-sage` | (light) | navy | teal | navy | `cream` | navy | Programs, Join |
+| Cream (default) | `bg-cream` | (light) | navy | teal | navy, teal or steel | `sage-soft` | navy | Hero, Projects, Team, 404 |
+| Sage band | `bg-sage` | (light) | navy | teal | navy | `cream` | navy | Mission (Manifesto), Programs, Join |
 | Sage-soft tile | `PaperCard tone="sage-soft"` | light | navy | teal | navy | — | navy | Project tiles |
 | Teal band or card | `bg-teal` | dark | cream | — | cream | `cream` | cream | Events, middle Programs card |
 | Navy band | `bg-navy` | dark | cream | sage | cream | `steel` | cream | Footer |
 
-Page rhythm, top to bottom: Nav (cream) → Hero (cream) → Manifesto (cream) → Programs (sage) → Projects (cream) → Events (teal) → Team (cream) → Join (sage) → Footer (navy). Coloured bands alternate with cream so no two bands touch.
+Page rhythm, top to bottom: Nav (cream) → Hero (cream) → Mission (sage; the Manifesto component) → Programs (sage, hidden for now) → Projects (cream) → Events (teal) → Team (cream) → Join (sage) → Footer (navy). Coloured bands alternate with cream so no two bands touch.
 
 ### Colour pairs for paper sheets
 
@@ -72,8 +72,8 @@ Three families, loaded from Google Fonts with `next/font` in `src/lib/fonts.ts`:
 
 | Family | Token / class | Weights used | Role | Fallback |
 |---|---|---|---|---|
-| **Bungee** | `font-display` | 400 only (it has no bold) | Chunky display capitals: section headings, card titles, manifesto, callouts, the nav name, the footer email. Always `uppercase`. | Arial Black |
-| **Fredoka** (variable) | `font-label` | 600 (semibold), 700 (bold) for the hero pillar labels and slogan | Rounded labels with wide tracking: plaque, buttons, nav links, tags, stickers, the hero pillars and slogan, member names. | Trebuchet MS |
+| **Bungee** | `font-display` | 400 only (it has no bold) | Chunky display capitals: section headings, card titles, manifesto, callouts, the footer email. Always `uppercase`. | Arial Black |
+| **Fredoka** (variable) | `font-label` | 600 (semibold), 700 (bold) for the nav brand name, the hero pillar labels and slogan | Rounded labels with wide tracking: the nav brand line, plaque, buttons, nav links, tags, stickers, the hero pillars and slogan, member names. | Trebuchet MS |
 | **Nunito** (variable) | `font-body` | 400 body, 500 (medium) for lead and small text | Everything else: paragraphs, roles, locations. Set on `<body>`. | Segoe UI |
 
 The SBUILD wordmark is traced artwork (`Wordmark` SVG), never typeset. Write the name in display type as **SBUILD** and in running copy as `sbuild`.
@@ -92,8 +92,8 @@ Sizes read phone → wide. Breakpoints are Tailwind's defaults: `sm` 640px, `md`
 | display-statement | Bungee, caps | `clamp(1.625rem, 3.6vw, 3.25rem)` = 26 → 52px | 1.1 | — | `font-display uppercase leading-[1.1] text-[clamp(1.625rem,3.6vw,3.25rem)]` | Manifesto statements |
 | display-callout | Bungee, caps | `clamp(1.75rem, 5vw, 2.75rem)` = 28 → 44px | 1.1 | — | `font-display uppercase leading-[1.1] text-[length:clamp(1.75rem,5vw,2.75rem)]` | Open-role title, "coming soon..." note |
 | label-plaque | Fredoka 600 | 18 → 24px (`sm`) | 1.2 | 0.06em | `<Plaque>` | The tagline |
-| label-button | Fredoka 600 | `sm` 17px · `md` 18px · `lg` 18 → 20px | 1.2 | 0.04em | `<Button size=…>` | Buttons |
-| label-nav | Fredoka 600 | 20px in the phone menu → 17px from `md` | 1.2 | 0.04em | `font-label font-semibold text-xl md:text-[17px] leading-[1.2] tracking-[0.04em]` | Nav links; footer links are 17px |
+| label-button | Fredoka 600 | `sm` 16 → 17px · `md` 18px · `lg` 18 → 20px | 1.2 | 0.04em | `<Button size=…>` | Buttons |
+| label-nav | Fredoka 600 | 20px in the menu → 17px inline from `xl` | 1.2 | 0.04em | `font-label font-semibold text-xl xl:text-[17px] leading-[1.2] tracking-[0.04em]` | Nav links; footer links are 17px |
 | label-sticker | Fredoka 600 | 15px | 1.2 | 0.06em | `<Sticker>` | Stickers |
 | label-tag | Fredoka 600 | 13px | 1.2 | 0.06em | `<Tag>` | Tags, event dates |
 | body-lead | Nunito 500 | 18 → 20px (`sm`) | 1.5 | — | `text-lg font-medium leading-normal sm:text-xl` | Section intros (Join body) |
@@ -107,7 +107,7 @@ Sizes read phone → wide. Breakpoints are Tailwind's defaults: `sm` 640px, `md`
 | Hero wordmark | SVG art | width 92% → 68% (`sm`) → 54% (`lg`), max 52rem | — | navy S, steel BUILD | `hero/Hero.tsx` |
 | Hero pillars ("Label: text") | Fredoka 600, label word 700 | `clamp(1.375rem, 4.4cqi, 2.25rem)` = 22 → 36px | 1.2 | navy | `hero/Hero.tsx` |
 | Hero slogan ("Dream it. …") | Fredoka 700 | `clamp(1.75rem, 6.6cqi, 3.5rem)` = 28 → 56px | 1.1 | steel | `hero/Hero.tsx` |
-| Nav brand name | Bungee, caps | 22 → 24px (`sm`) | 1 | navy, teal on hover | `nav/Nav.tsx` |
+| Nav brand line ("Sbuild: Innovators & Founders Community") | Fredoka; name 700 navy (teal on hover), descriptor 600 teal; both always the same size | 13px on phones (12px below 375px) → 17px (`sm`) → 20px (`xl`) | 1.2 | navy + teal | `nav/Nav.tsx` |
 | Footer email | Bungee | `clamp(1.125rem, 6.2vw, 1.625rem)` → from `sm` `clamp(1.625rem, 3.4vw, 2.875rem)` = 18 → 46px | 1.1 | cream, sage on hover | `footer/Footer.tsx` |
 | Team member name | Fredoka 600 | 18px | 1.2 | navy, tracking 0.03em | `sections/team/Team.tsx` |
 | Avatar initials | Bungee | 27% of the avatar (124px avatar → 33px) | 1 | navy on sage/sage-soft, cream on steel/teal/navy | `art/Avatar.tsx` |
@@ -178,7 +178,7 @@ All art is flat inline SVG in the palette, drawn as cut paper, in `src/component
 | Component | What it is | Colours | Where it appears |
 |---|---|---|---|
 | `Wordmark` | The traced SBUILD letters; `cap` adds the navy cap with steel brim on the S; `variant="arced"` bends it for the badge | navy S, steel BUILD | Hero h1, intro |
-| `Badge` | The round logo: arced wordmark over the beaver inside a stitch ring | full palette | Nav brand (44 → 52px) |
+| `Badge` | The round logo: arced wordmark over the beaver inside a stitch ring | full palette | Nav brand (36px phones → 44px `sm` → 52px `md`) |
 | `Beaver` | Mascot in a navy cap, rising from a bottom edge; idle blink after the intro | bark, bark-deep, blush, navy, steel | Hero banner, Join, intro. At most one per screen. |
 | `Keycap` | Isometric key with a mint letter (S B U I L D or blank) | steel top, teal and teal-mid sides, cream edge, mint letter | Hero banner, intro, 404 |
 | `Lightbulb` | Bulb with a raised fist, optional ray burst | mint (or steel) | Hero banner (with rays) |
@@ -230,13 +230,13 @@ Mobile-first, checked at 375, 768 and 1440px with no horizontal scroll. Tailwind
 |---|---|
 | Page gutter | 16px on phones (`px-4`), 24–40px from `sm` (`sm:px-6` … `sm:px-10`, `lg:px-10`) |
 | Content widths | Nav and Programs `max-w-7xl` (1280px); Projects, Team, Join 1200px; Manifesto 1120px; Events 1040px; Footer 75rem (1200px); hero text column `max-w-5xl` (1024px) |
-| Nav height | 64px, 76px from `md`; sticky, `z-50` |
+| Nav | 64px tall, 76px from `md`; sticky, `z-50`. Brand lockup: on phones the name sits over the descriptor (which wraps to two lines); from `sm` one line, "Sbuild: Innovators & Founders Community". Section links stay in the menu below `xl` so the brand line has room. |
 | Band padding | Band: `py-4 sm:py-5` around the stitch lines; inside: `py-11` (44px) → `sm:py-[76px]` |
 | Cream section padding | `py-16 sm:py-24` (Projects), `py-20 md:py-24` (Team) |
 | Heading → content | `mb-7` (28px) → `sm:mb-10` (40px) |
 | Card grid gap | `gap-6` (24px) → `sm:gap-8` (32px); 3 columns only from `xl` |
 | Card padding | 24px sides (28px from `sm`), 32px top, 36px bottom |
-| Touch targets | At least 44px (`min-h-11`); the menu button is 48px |
+| Touch targets | At least 44px (`min-h-11`); the menu button is 44px on phones, 48px from `sm` |
 | Z-index | Intro overlay 100 · Nav 50 · everything else ≤ 10 · side panels `-z-10` inside an `isolate` parent |
 
 Focus: a solid 3px ring in `--focus-ring` (navy, cream on dark surfaces), offset 3px. Text selection: navy highlight with cream text, inverted on dark surfaces.

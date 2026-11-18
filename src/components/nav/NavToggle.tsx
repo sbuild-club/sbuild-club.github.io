@@ -11,9 +11,9 @@ type NavToggleProps = {
 
 /**
  * Mobile disclosure for the primary nav: the cut-key menu button (48px) and the panel that wraps
- * the server-rendered links. From md up the button is hidden and the panel shows inline.
+ * the server-rendered links. From xl up the button is hidden and the panel shows inline.
  * Closes on link click, on a click outside the panel, on Escape (focus returns to the button)
- * and when focus leaves the panel. Without JS the panel stays collapsed below md.
+ * and when focus leaves the panel. Without JS the panel stays collapsed below xl.
  */
 export function NavToggle({ children }: NavToggleProps) {
   const [open, setOpen] = useState(false);
@@ -66,7 +66,7 @@ export function NavToggle({ children }: NavToggleProps) {
         aria-expanded={open}
         aria-controls={PANEL_ID}
         onClick={() => setOpen((value) => !value)}
-        className="group relative inline-flex size-12 shrink-0 cursor-pointer items-center justify-center text-cream md:hidden"
+        className="group relative inline-flex size-11 shrink-0 sm:size-12 cursor-pointer items-center justify-center text-cream xl:hidden"
       >
         {/* The cut is on a child, so the focus ring on the button stays whole. */}
         <span
@@ -94,7 +94,7 @@ export function NavToggle({ children }: NavToggleProps) {
         ref={panelRef}
         id={PANEL_ID}
         data-open={open}
-        className="absolute inset-x-0 top-full hidden max-h-[calc(100svh-4rem)] overflow-y-auto bg-cream px-4 pt-1 pb-4 data-[open=true]:block sm:px-6 md:static md:block md:max-h-none md:overflow-visible md:bg-transparent md:p-0"
+        className="absolute inset-x-0 top-full hidden max-h-[calc(100svh-4rem)] overflow-y-auto bg-cream px-4 pt-1 pb-4 data-[open=true]:block sm:px-6 lg:px-10 xl:static xl:block xl:max-h-none xl:overflow-visible xl:bg-transparent xl:p-0"
       >
         {children}
       </div>
