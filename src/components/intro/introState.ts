@@ -1,4 +1,4 @@
-// html[data-intro] state and the once-per-session flag (docs/CONTRACT.md, "Intro states").
+// html[data-intro*] state and the once-per-session flag (docs/CONTRACT.md, "Intro states").
 // Plain module: every function touches the DOM, so call them only from effects,
 // event handlers or useSyncExternalStore.
 
@@ -26,6 +26,17 @@ export function hasSeenIntro(): boolean {
   } catch {
     return false;
   }
+}
+
+/**
+ * When the gate first saw the page visible (performance.now() ms), or null while nobody has seen
+ * it yet (Chrome is prerendering it, or it opened in a background tab).
+ */
+export function getIntroShownAt(): number | null {
+  const value = document.documentElement.getAttribute("data-intro-shown");
+  if (value === null) return null;
+  const at = Number(value);
+  return Number.isFinite(at) ? at : 0;
 }
 
 export function rememberIntro(): void {

@@ -37,7 +37,7 @@ Removed from round one: dark theme, scanlines, CRT boot, terminal log, pixel-art
 3. **Keys build the name (1.4 s).** The keys slide together and flip over to become the six letters of the wordmark (geometry from `src/components/art/wordmarkPaths.ts`). A mint burst pops as the last one lands.
 4. **Beaver, then the page (2.2 s).** The plaque drops under the name and the beaver pops up. The wordmark settles onto the hero's `#wordmark` box and the rest of the page is uncovered.
 
-Rules: the page is server-rendered underneath from the first byte and the intro is a fixed overlay, so zero layout shift. Plays once per session (sessionStorage). A visible, keyboard-focusable skip button, any click or any key skips. Never runs under `prefers-reduced-motion`. CSS and plain JS (SVG or a small canvas); no animation libraries. After the intro, motion is ambient only (the beaver's blink, small settles).
+Rules: the page is server-rendered underneath from the first byte and the intro is a fixed overlay, so zero layout shift. Plays once per session (sessionStorage). It starts only once the page is on screen (not while Chrome prerenders it or it sits in a background tab). A visible, keyboard-focusable skip button, any click or any key skips. Never runs under `prefers-reduced-motion`. CSS and plain JS (SVG or a small canvas); no animation libraries. After the intro, motion is ambient only (the beaver's blink, small settles).
 
 ## Page structure (single page, in order)
 

@@ -103,7 +103,7 @@ Read the component file for the full prop types; each has a doc comment.
 - `@theme inline` exposes them to Tailwind. It starts with `--color-*: initial` and `--font-*: initial`, which delete Tailwind's default palette and font stacks, so only the 11 tokens plus `transparent` and `current` exist as colours. Spacing, font sizes, breakpoints and rotations are Tailwind's defaults.
 - `@utility` defines `cut-a` … `cut-key` (clip-paths) and `stitch-stroke` (SVG dash pattern).
 - `@custom-variant` defines `intro-pending:` and `intro-done:` (they match `html[data-intro]`).
-- The base layer sets: cream html with navy text; scroll locked while the intro is pending; body 17px / 1.6 with `overflow-x: clip`; `section[id] { scroll-margin-top: 5rem }` so anchors land below the sticky nav; the focus ring; per-surface `--focus-ring` and `--numeral`; selection colours; smooth scroll when motion is allowed.
+- The base layer sets: cream html with navy text; scroll locked while the intro is pending (with the scrollbar gutter swapped for equal padding, so the overlay reaches the window edge); body 17px / 1.6 with `overflow-x: clip`; `section[id] { scroll-margin-top: 5rem }` so anchors land below the sticky nav; the focus ring; per-surface `--focus-ring` and `--numeral`; selection colours; smooth scroll when motion is allowed.
 - Arbitrary values are fine for non-colour sizes: `text-[13px]`, `tracking-[0.06em]`, `pr-(--layer-offset)`, `text-(color:--numeral)`. Give a clamped font size the `length:` hint (`text-[length:clamp(1.75rem,5vw,2.75rem)]`) so Tailwind reads it as a size.
 
 ## 6. Surfaces and accessibility
@@ -119,8 +119,8 @@ Read the component file for the full prop types; each has a doc comment.
 
 | File | Job |
 |---|---|
-| `app/layout.tsx` (gate script) | Before first paint, sets `html[data-intro]`: `pending` on the first visit in a tab, `done` if already seen this session or reduced motion is on. Flips to `done` after 8s as a failsafe. |
-| `intro/introState.ts` | Reads and writes that attribute and the sessionStorage flag `sbuild:intro`. `endIntro()` is the single exit: write the flag, set `done`. |
+| `app/layout.tsx` (gate script) | Before first paint, sets `html[data-intro]`: `pending` on the first visit in a tab, `done` if already seen this session or reduced motion is on. Adds `data-intro-shown` once the page is first visible (a prerendered or background-tab page waits). Flips to `done` 8s after that as a failsafe. |
+| `intro/introState.ts` | Reads and writes those attributes and the sessionStorage flag `sbuild:intro`. `endIntro()` is the single exit: write the flag, set `done`. |
 | `intro/Intro.tsx` | The overlay markup (client component, server-rendered). Every moving part starts invisible. |
 | `intro/timeline.ts` | The storyboard: one async function per step using the Web Animations API. Timing constants at the top. |
 | `intro/layout.ts` | Geometry: where keys, the wordmark stage and the plaque go for the current viewport. |

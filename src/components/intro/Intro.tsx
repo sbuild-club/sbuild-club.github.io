@@ -49,8 +49,11 @@ export function Intro() {
             <line x1="3" y1="19" x2="100%" y2="19" className="stitch-stroke stroke-sage-soft" />
           </svg>
           <svg data-part="stitch" focusable="false" className="absolute right-0 bottom-5 block h-[22px] w-[72%] opacity-0 sm:bottom-7">
-            <line x1="3" y1="3" x2="100%" y2="3" className="stitch-stroke stroke-sage-soft" />
-            <line x1="3" y1="19" x2="100%" y2="19" className="stitch-stroke stroke-sage-soft" />
+            {/* Mirrored, so the dash pattern starts at the screen edge like the top row's does. */}
+            <g className="origin-center -scale-x-100 [transform-box:view-box]">
+              <line x1="3" y1="3" x2="100%" y2="3" className="stitch-stroke stroke-sage-soft" />
+              <line x1="3" y1="19" x2="100%" y2="19" className="stitch-stroke stroke-sage-soft" />
+            </g>
           </svg>
           <div data-part="burst" className="absolute top-0 left-0 opacity-0">
             <Burst className="h-auto w-full" />

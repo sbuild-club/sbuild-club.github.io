@@ -6,12 +6,14 @@
 //   4. plaque and beaver (1.97 s): the tagline plaque drops under the name, the beaver pops up
 //   5. land (2.41 s): the name FLIPs onto #wordmark while the cream sheet, carrying the stitches,
 //      burst, plaque and beaver, peels away and uncovers the hero's own
-// startIntro() is called from Intro's effect only when html[data-intro] is "pending".
+// startIntro() is called from Intro's effect only when html[data-intro] is "pending". It holds the
+// blank desk until the page is actually on screen.
 // Everything is DOM/SVG animated with the Web Animations API (transform and opacity only).
 
 import { toPointsAttr, wordmarkPaths } from "@/components/art/wordmarkPaths";
 import {
   endIntro,
+  getIntroShownAt,
   getIntroState,
   hasSeenIntro,
   markIntroDone,
@@ -118,6 +120,7 @@ export function startIntro(root: HTMLElement): () => void {
   }
 
   const scope = createScope();
+  let started = false;
   let ended = false;
   const finish = () => {
     if (ended) return;
@@ -126,11 +129,15 @@ export function startIntro(root: HTMLElement): () => void {
     scope.cancel();
   };
 
-  try {
-    const parts = findParts(root);
-    if (!parts || document.hidden) {
-      finish();
-    } else {
+  const begin = (shownAt: number) => {
+    started = true;
+    try {
+      const parts = findParts(root);
+      // Hidden after having been shown: the visitor left mid-load, so skip as if they'd pressed a key.
+      if (!parts || document.hidden) {
+        finish();
+        return;
+      }
       scope.listen(window, "keydown", (event) => onKey(event as KeyboardEvent, finish), { capture: true });
       scope.listen(window, "click", finish, { capture: true });
       scope.listen(document, "visibilitychange", () => {
@@ -142,11 +149,22 @@ export function startIntro(root: HTMLElement): () => void {
           if (motion.matches) finish();
         });
       }
-      playIntro(parts, scope).then(finish, finish);
+      playIntro(parts, scope, shownAt).then(finish, finish);
+    } catch {
+      finish();
     }
-  } catch {
-    finish();
-  }
+  };
+
+  // Chrome prerenders a site typed into the address bar (and a tab can open in the background), so
+  // this can run before anyone sees the page. Wait for the gate to mark it shown; the gate's
+  // listeners were added first, so the attribute is already set when these run.
+  const beginOnceShown = () => {
+    const shownAt = getIntroShownAt();
+    if (!started && shownAt !== null) begin(shownAt);
+  };
+  scope.listen(document, "visibilitychange", beginOnceShown);
+  scope.listen(document, "prerenderingchange", beginOnceShown);
+  beginOnceShown();
 
   return () => {
     scope.cancel();
@@ -161,11 +179,11 @@ function onKey(event: KeyboardEvent, finish: () => void): void {
   finish();
 }
 
-async function playIntro(parts: Parts, scope: Scope): Promise<void> {
+async function playIntro(parts: Parts, scope: Scope, shownAt: number): Promise<void> {
   reset(parts);
   // Hydration came late: the visitor has already looked at a blank desk, and the gate's
-  // 8 s failsafe would cut a full run short. Leave cleanly instead.
-  if (performance.now() > LATE_START_MS) {
+  // 8 s failsafe (counted from the same moment) would cut a full run short. Leave cleanly instead.
+  if (performance.now() - shownAt > LATE_START_MS) {
     await fadeOut(parts, scope);
     return;
   }

@@ -26,7 +26,7 @@ export function Nav() {
           <Badge size={52} className="h-auto w-9 shrink-0 sm:w-11 md:w-[52px]" />
           {/* Phones stack the name over the descriptor (which wraps to two lines); from sm it reads as one
               line, "name: descriptor". The links stay in the menu below xl so this line has room. */}
-          <span className="flex min-w-0 flex-col font-label text-[13px] leading-[1.2] max-[375px]:text-xs sm:block sm:text-[17px] xl:text-xl">
+          <span className="flex min-w-0 flex-col font-label text-sm leading-[1.2] max-[375px]:text-xs sm:block sm:text-[17px] md:text-lg lg:text-xl xl:text-2xl">
             <span className="font-bold text-navy group-hover:text-teal">
               {site.nav.brand.name}
               <span className="max-sm:hidden">:</span>
@@ -41,7 +41,7 @@ export function Nav() {
               <li key={i}>
                 <a
                   href={rootHref(link.href)}
-                  className="flex min-h-12 items-center font-label text-xl leading-[1.2] font-semibold tracking-[0.04em] text-navy hover:text-teal xl:min-h-11 xl:px-2 xl:text-[17px]"
+                  className="flex min-h-12 items-center font-label text-xl leading-[1.2] font-semibold tracking-[0.04em] text-navy hover:text-teal xl:min-h-11 xl:px-2 xl:text-xl"
                 >
                   {link.label}
                 </a>

@@ -136,8 +136,13 @@
     scrollbar-gutter: stable;
   }
 
+  /* Scroll is locked while the intro plays. With classic scrollbars the stable gutter would leave a
+     strip the fixed overlay cannot paint into, so swap it for padding of the same width (measured by
+     the gate script): the overlay covers the whole window and the page keeps its final width. */
   html[data-intro="pending"] {
     overflow: hidden;
+    scrollbar-gutter: auto;
+    padding-right: var(--scrollbar-width, 0px);
   }
 
   body {
