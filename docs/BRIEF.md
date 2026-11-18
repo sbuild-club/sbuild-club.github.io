@@ -1,5 +1,7 @@
 # sbuild — brief (v2, paper-cut overhaul)
 
+> **Status (2026-11-17): historical.** This was the brief for the overhaul build, which is merged. For current work use [`DESIGN-SYSTEM.md`](DESIGN-SYSTEM.md) (the look) and [`CODE-GUIDE.md`](CODE-GUIDE.md) (the code); where they differ from this file, they win.
+
 v2 replaces the round-one retro-terminal brief. The sections, page structure and copy stay the same; the whole site is re-skinned to the paper-cut look of the club's new logo. Read this file and `docs/CONTRACT.md` in full before touching anything.
 
 ## Visual source of truth

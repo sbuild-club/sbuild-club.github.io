@@ -1,5 +1,7 @@
 # sbuild — build contract (v2, paper-cut overhaul)
 
+> **Status (2026-11-17): historical.** This was the contract for the six-lane overhaul build, which is merged. Its lane, worktree and frozen-file rules (§1, §5, §6) no longer apply. For current work use [`DESIGN-SYSTEM.md`](DESIGN-SYSTEM.md) (the look) and [`CODE-GUIDE.md`](CODE-GUIDE.md) (the code); where they differ from this file, they win.
+
 Six lanes re-skin this site at the same time, each in its own git worktree, all branched from the foundation commit. Folder ownership keeps them from colliding; the interfaces below let every lane code against the foundation stubs before the real art exists. Read this file and `docs/BRIEF.md` in full before touching anything.
 
 `docs/reference/` is the visual source of truth (banner, brand rules, tokens, approved mockup); see the brief. `.claude/prompts/sbuild-website.md` is the round-zero prompt for a static HTML build. It is **superseded** by `docs/BRIEF.md` and this contract; it stays in the repo for history only. Do not follow it and do not edit it.

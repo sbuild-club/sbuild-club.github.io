@@ -48,9 +48,9 @@ export const site: Site = {
   },
   hero: {
     pillars: [
-      { label: "Build", text: "Turn your ideas into real projects." },
-      { label: "Community", text: "Find your co-founders." },
-      { label: "Founding", text: "Create your own startup." },
+      { label: "Founding", text: "Create your own startup" },
+      { label: "Community", text: "Grow entrepreneurship connections" },
+      { label: "Innovate", text: "Turn your ideas into useful products" },
     ],
     mission: "Dream it. Build it. Own it.",
     // Both jump down the page: to the newsletter button in the footer and to the open-role slip.
