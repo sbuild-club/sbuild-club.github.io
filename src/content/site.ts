@@ -5,7 +5,19 @@ type Pillar = { label: string; text: string };
 type Program = { number: string; name: string; description: string };
 type Project = { name: string; tags: string[]; icon: ProjectIconName };
 type ClubEvent = { date: string; name: string; location: string };
-type Member = { name: string; role: string; initials: string };
+type Member = {
+  name: string;
+  role: string;
+  /** Shown on the avatar when there is no photo. */
+  initials: string;
+  /**
+   * Optional photo, served from public/team/: "/team/name.jpg". Square, about 600×600, a JPG
+   * under ~150 KB, face centred (the avatar is a circle). See docs/CODE-GUIDE.md §9.
+   */
+  photo?: string;
+  /** Optional personal site or profile. The photo and name become one link (new tab) with a ↗ badge. */
+  href?: string;
+};
 
 export type Site = {
   name: string;
@@ -92,7 +104,13 @@ export const site: Site = {
   // Empty for now: the events section then shows the open role (`openRole`) instead of slips.
   events: [],
   team: [
-    { name: "[MEMBER_1]", role: "[MEMBER_1_ROLE]", initials: "[A]" },
+    {
+      name: "Xiang Liu",
+      role: "President",
+      initials: "XL",
+      photo: "/team/xiang.jpg",
+      href: "https://xiang1103.github.io/",
+    },
     { name: "[MEMBER_2]", role: "[MEMBER_2_ROLE]", initials: "[B]" },
     { name: "[MEMBER_3]", role: "[MEMBER_3_ROLE]", initials: "[C]" },
     { name: "[MEMBER_4]", role: "[MEMBER_4_ROLE]", initials: "[D]" },

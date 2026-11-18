@@ -110,7 +110,7 @@ Sizes read phone → wide. Breakpoints are Tailwind's defaults: `sm` 640px, `md`
 | Nav brand line ("Sbuild: Innovators & Founders Community") | Fredoka; name 700 navy (teal on hover), descriptor 600 teal; both always the same size | 13px on phones (12px below 375px) → 17px (`sm`) → 20px (`xl`) | 1.2 | navy + teal | `nav/Nav.tsx` |
 | Footer email | Bungee | `clamp(1.125rem, 6.2vw, 1.625rem)` → from `sm` `clamp(1.625rem, 3.4vw, 2.875rem)` = 18 → 46px | 1.1 | cream, sage on hover | `footer/Footer.tsx` |
 | Team member name | Fredoka 600 | 18px | 1.2 | navy, tracking 0.03em | `sections/team/Team.tsx` |
-| Avatar initials | Bungee | 27% of the avatar (124px avatar → 33px) | 1 | navy on sage/sage-soft, cream on steel/teal/navy | `art/Avatar.tsx` |
+| Avatar initials | Bungee | 27% of the avatar (Team: 150px → 41px, 196px from `sm` → 53px) | 1 | navy on sage/sage-soft, cream on steel/teal/navy | `art/Avatar.tsx` |
 | Intro skip button | Fredoka 600 | 17 → 18px (`sm`) | 1.2 | cream on teal, tracking 0.06em | `intro/Intro.tsx` |
 | 404 code | Bungee | `clamp(6rem, 24vw, 12rem)` = 96 → 192px | 0.9 | steel, tilted −2° | `app/not-found.tsx` |
 | 404 heading | Bungee, caps | 24 → 36px (`sm`) | 1.1 | navy | `app/not-found.tsx` |
@@ -163,7 +163,7 @@ The structure behind every layered piece (`Button`, `PaperCard layer`, `Sticker`
 
 Two dashed rows, always as a pair: dash 30px, gap 14px, weight 6px with rounded ends, 10px between rows (22px tall in total). Use `<StitchLine tone=… />`: `sage-soft` on cream, `cream` on sage or teal, `steel` on navy. Programs and Events open and close with one (`py-4 sm:py-5` on the band, a StitchLine just inside its top and bottom edges); Join opens with one and lets the beaver rise out of its bottom edge. For a custom SVG stroke, the `stitch-stroke` utility applies the dash pattern; colour it with `stroke-*`.
 
-Stitch rings on round pieces (Avatar): radius 44 of 100, dash `6.5 4.5`, width 2.6, cream (steel on a navy disc).
+Stitch rings on round pieces (Avatar): radius 44 of 100 (46 on a photo avatar, where the photo fills to radius 42), dash `6.5 4.5`, width 2.6, cream (steel on a navy disc).
 
 ### Round shapes and tilt
 
@@ -188,7 +188,7 @@ All art is flat inline SVG in the palette, drawn as cut paper, in `src/component
 | `PixelCluster` | Small chip clusters: `tee`, `plus`, `row` | steel | Hero banner |
 | `SidePanels` | Large angled sage and sage-soft panels at band edges | sage, sage-soft | Hero (both, from `sm`), Team (left, from `lg`) |
 | `ProjectIcon` | Eight icons: rocket, wrench, lightbulb, chip, terminal, satellite, flag, bolt | `currentColor` (steel on tiles) | Project tiles |
-| `Avatar` | Round disc with a stitch ring and initials | sage, sage-soft, steel, teal or navy disc | Team |
+| `Avatar` | Round disc with a stitch ring and initials, or a member photo set into the disc | sage, sage-soft, steel, teal or navy disc | Team |
 
 Size art with a width class plus `h-auto` (`className="h-auto w-[clamp(6rem,15vw,17.5rem)]"`). The `size` prop is the fallback width.
 

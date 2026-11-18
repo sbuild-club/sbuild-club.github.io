@@ -35,6 +35,7 @@ src/
     intro/               first-visit intro (§7)
 docs/                    this guide, DESIGN-SYSTEM.md, reference art and mockups, historical overhaul docs
 public/                  copied into out/ as-is (.nojekyll)
+  team/                  team member photos (e.g. xiang.jpg), referenced from site.ts as "/team/xiang.jpg"
 ```
 
 Which file to open:
@@ -219,3 +220,12 @@ Done when: the three checks pass; the section has no horizontal scroll at 375, 7
 ### Change copy, links or team members
 
 Edit `src/content/site.ts` only; the dev server updates as soon as you save.
+
+### Add a team member photo
+
+1. **Prepare the photo.** Crop it square with the face in the middle (the avatar is a circle and trims the corners), resize it to about 600×600 and save it as a JPG under ~150 KB. A phone photo straight off the camera is several MB, so always shrink it first: on a Mac, `sips -Z 600 photo.jpg` after cropping in Preview; anywhere else, squoosh.app.
+2. **Name it after the member** in lowercase, no spaces (`xiang.jpg`, or `jane-doe.jpg` if first names clash), and put it in `public/team/`. Do not leave the original at the repo root.
+3. **Point the member at it** in `src/content/site.ts`: `{ name: "Jane Doe", role: "…", initials: "JD", photo: "/team/jane-doe.jpg" }`. The path starts at `/team/`, not `/public/team/`.
+4. **Optional link.** Add `href: "https://…"` (a personal site, LinkedIn, GitHub) and the photo and name become one link that opens in a new tab: a navy ↗ badge on the photo, a dashed teal underline under the name, and on hover the photo grows slightly while the badge and name turn teal.
+
+The photo replaces the initials and sits inside the coloured disc with the stitch ring on the rim around it. Members without `photo` keep their initials.
