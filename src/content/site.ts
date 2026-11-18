@@ -117,9 +117,10 @@ export const site: Site = {
       photo: "/team/xiang.jpg",
       href: "https://xiang1103.github.io/",
     },
-    { name: "[MEMBER_2]", role: "[MEMBER_2_ROLE]", initials: "[B]" },
-    { name: "[MEMBER_3]", role: "[MEMBER_3_ROLE]", initials: "[C]" },
-    { name: "[MEMBER_4]", role: "[MEMBER_4_ROLE]", initials: "[D]" },
+    { name: "Khang (Tom) Nguyen", role: "Vice President", initials: "[T]" },
+    { name: "Simon Ramirez", role: "Secretary", initials: "S", photo: "/team/simon.jpg" },
+    { name: "Alex Tran", role: "Treasurer", initials: "[A]" },
+    { name: "Han Le", role: "Graphic Designer", initials: "[H]" },
   ],
   openRole: {
     title: "Chief of Marketing",
