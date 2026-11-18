@@ -94,7 +94,7 @@ export function Intro() {
         onClick={endIntro}
         className="group absolute top-14 right-2 inline-flex min-h-11 min-w-11 items-center justify-center p-1 sm:top-16 sm:right-6"
       >
-        <span className="cut-tag-a bg-teal px-4 py-2 font-label text-[15px] leading-[1.2] font-semibold tracking-[0.06em] text-cream group-hover:bg-navy group-active:translate-y-px">
+        <span className="cut-tag-a bg-teal px-5 py-2.5 font-label text-[17px] leading-[1.2] font-semibold tracking-[0.06em] text-cream group-hover:bg-navy group-active:translate-y-px sm:px-6 sm:py-3 sm:text-lg">
           skip <span aria-hidden="true">↵</span>
         </span>
       </button>

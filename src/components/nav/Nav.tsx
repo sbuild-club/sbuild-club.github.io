@@ -11,10 +11,12 @@ import { rootHref } from "./rootHref";
  * menu button below md (toggled by the client NavToggle); the signup button stays visible at every
  * width, with its short label below lg (the full label remains its accessible name).
  * DOM order matches visual order: brand, menu button, links, signup.
+ * During the first-visit intro the header waits above the viewport, so the intro's peeling sheet
+ * never uncovers it mid-peel; it drops in once html[data-intro] flips to "done" (finish or skip).
  */
 export function Nav() {
   return (
-    <header className="sticky top-0 z-50 bg-cream">
+    <header className="sticky top-0 z-50 bg-cream intro-pending:-translate-y-full motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out">
       <nav
         aria-label="primary"
         className="relative mx-auto flex h-16 max-w-7xl items-center gap-2.5 px-4 sm:gap-4 sm:px-6 md:h-[76px] lg:gap-6 lg:px-10"
