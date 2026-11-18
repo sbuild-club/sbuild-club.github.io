@@ -44,7 +44,7 @@ Rules: the page is server-rendered underneath from the first byte and the intro 
 Surfaces follow `mockup/Main.html`; see the contract's surface table for the exact attribute rules.
 
 1. **Nav** (cream): round badge plus name, links programs / cohort program (`#projects`) / open role (`#events`, "events" once events exist) / team, "interest signup" as a primary button ("signup" below `lg`); sticky, compact, mobile menu.
-2. **Hero** (cream, side panels): the banner recomposed in SVG: wordmark (the page's one `<h1>`), tagline plaque, scattered keycaps, exclamation marks, lightbulb burst, pixel clusters, beaver; then, centred, the three pillars (Build / Community / Founding), the slogan, two CTAs.
+2. **Hero** (cream, side panels): the banner recomposed in SVG: wordmark (the page's one `<h1>`), tagline plaque, scattered keycaps, exclamation marks, lightbulb burst, pixel clusters, beaver; then, centred, the three pillars (Build / Community / Founding), the slogan, three CTAs.
 3. **Manifesto** (cream): four short statements set large in display type, offset and tilted, with a mint exclamation mark.
 4. **Programs** (sage band, stitch lines top and bottom): numbered cards 01 / 02 / 03 on cut paper with a navy layer; one card teal.
 5. **Projects** (cream, one navy star burst): grid of sage-soft cut tiles with a project icon, name and tags; until projects exist, a single "coming soon..." tile.

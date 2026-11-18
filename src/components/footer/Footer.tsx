@@ -37,7 +37,11 @@ export function Footer() {
 
         <StitchLine tone="steel" />
 
-        <div className="flex flex-col gap-x-7 font-label text-[17px] leading-[1.2] font-semibold tracking-[0.04em] sm:flex-row sm:flex-wrap sm:items-center">
+        {/* #socials is the target of the hero's "follow socials" button. */}
+        <div
+          id="socials"
+          className="flex scroll-mt-20 flex-col gap-x-7 font-label text-[17px] leading-[1.2] font-semibold tracking-[0.04em] sm:flex-row sm:flex-wrap sm:items-center"
+        >
           <ul className="flex flex-wrap gap-x-6 sm:gap-x-7">
             {site.footer.socials.map((social, i) => (
               <li key={i}>

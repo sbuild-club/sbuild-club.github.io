@@ -14,7 +14,8 @@
       { "name": "navy", "value": "#2a3d5a", "usage": "Body text on cream, sage and sage-soft (9.5:1 on cream). The S of the wordmark, the beaver's cap, star bursts, focus ring." },
       { "name": "bark", "value": "#625045", "usage": "Beaver body. Mascot only, never UI." },
       { "name": "bark-deep", "value": "#382e27", "usage": "Beaver ears, eyes, nose and mouth. Mascot only." },
-      { "name": "blush", "value": "#deb39e", "usage": "Beaver teeth. May appear as one tiny warm accent per screen at most; never text." }
+      { "name": "blush", "value": "#deb39e", "usage": "Beaver teeth. May appear as one tiny warm accent per screen at most; never text." },
+      { "name": "gold", "value": "#dcb35c", "usage": "The one warm accent: the accent button face (hero \"follow socials\"). Navy text on it is 5.6:1; never text itself." }
     ]
   },
   "type": {

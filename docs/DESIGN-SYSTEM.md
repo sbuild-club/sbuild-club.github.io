@@ -36,6 +36,7 @@ Eleven colours exist, and only these. Tailwind's default palette is removed, so 
 | `bark` | `#625045` | Beaver body. | Never. Mascot only. |
 | `bark-deep` | `#382e27` | Beaver ears, eyes, nose, mouth. | Never. Mascot only. |
 | `blush` | `#deb39e` | Beaver teeth. At most one tiny warm accent per screen. | Never. |
+| `gold` | `#dcb35c` | The one warm accent: the `accent` button face (the hero's "follow socials"). Keep it to that one button. | Never. (Navy text *on* a gold button is fine, 5.6:1.) |
 
 Body text needs at least 4.5:1. Steel (3.9:1 on cream) passes only as large display type; that is why every steel text on the site is 24px or bigger.
 

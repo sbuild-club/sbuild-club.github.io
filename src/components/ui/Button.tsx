@@ -1,7 +1,7 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cx } from "./cx";
 
-type Variant = "primary" | "secondary" | "inverse";
+type Variant = "primary" | "secondary" | "inverse" | "accent";
 type Size = "sm" | "md" | "lg";
 type Cut = "a" | "b" | "c";
 
@@ -32,12 +32,15 @@ const faces: Record<Variant, string> = {
   primary: "bg-teal text-cream",
   secondary: "bg-sage text-navy",
   inverse: "bg-cream text-navy",
+  // The one warm face: the hero's "follow socials". Navy on gold is 5.6:1.
+  accent: "bg-gold text-navy",
 };
 
 const layers: Record<Variant, string> = {
   primary: "bg-navy",
   secondary: "bg-steel",
   inverse: "bg-navy",
+  accent: "bg-navy",
 };
 
 const sizes: Record<Size, string> = {
@@ -56,6 +59,7 @@ const defaultCut: Record<Variant, Cut> = {
   primary: "a",
   secondary: "b",
   inverse: "c",
+  accent: "c",
 };
 
 /**

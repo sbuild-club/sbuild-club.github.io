@@ -35,6 +35,8 @@ export type Site = {
     mission: string;
     primaryCta: Link;
     secondaryCta: Link;
+    /** The gold `accent` button; jumps to the social links in the footer. */
+    socialsCta: Link;
   };
   /**
    * The mission block right under the hero: a display heading over short paragraphs. `lead` is set
@@ -48,7 +50,7 @@ export type Site = {
   /** Shown in the projects section while `projects` is empty. */
   projectsNote: string;
   events: ClubEvent[];
-  team: [Member, Member, Member, Member];
+  team: Member[];
   /** The e-board seat that is open. Shown in the events section, with a link to its application form, while `events` is empty. */
   openRole: { title: string; cta: Link };
   /** `body` is optional: leave it out (or comment it out) and the join section shows just the headline and button. */
@@ -83,9 +85,11 @@ export const site: Site = {
       { label: "Innovate", text: "Turn your ideas into useful products" },
     ],
     mission: "Dream it. Build it. Own it.",
-    // Both jump down the page: to the newsletter button in the footer and to the open-role slip.
-    primaryCta: { label: "sign up for our newsletter", href: "#newsletter" },
+    // All three jump down the page: to the newsletter button in the footer, to the open-role slip
+    // and to the footer's social links.
+    primaryCta: { label: "Sign up for our newsletter", href: "#newsletter" },
     secondaryCta: { label: "Open Eboard applications", href: "#events" },
+    socialsCta: { label: "Follow socials", href: "#socials" },
   },
   manifesto: {
     heading: "Mission",

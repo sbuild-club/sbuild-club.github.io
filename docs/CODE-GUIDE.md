@@ -86,7 +86,7 @@ Which file to open:
 
 | Component | Use it for | Key props |
 |---|---|---|
-| `Button` | Every button and button-styled link (`<a>` when `href` is set) | `variant` primary / secondary / inverse, `size` sm (nav) / md / lg, `cut` a/b/c |
+| `Button` | Every button and button-styled link (`<a>` when `href` is set) | `variant` primary / secondary / inverse / accent (gold, one per page), `size` sm (nav) / md / lg, `cut` a/b/c |
 | `PaperCard` | Cards and tiles | `cut` (required), `tone` cream / teal / sage-soft, `layer` (navy second sheet), `as` div / li / article |
 | `SectionHeading` | All section (`h2`) and card (`h3`) headings | `title`, `as`, `number`, `tilt` ±1/±2, `tone` inherit / steel / teal |
 | `Plaque` | The tagline | `as` |

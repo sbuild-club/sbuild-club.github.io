@@ -14,6 +14,7 @@
   --bark: #625045;
   --bark-deep: #382e27;
   --blush: #deb39e;
+  --gold: #dcb35c;
 
   --font-display: var(--font-bungee), "Arial Black", sans-serif;
   --font-label: var(--font-fredoka), "Trebuchet MS", sans-serif;
@@ -63,7 +64,7 @@
   --z-intro: 100;
 }
 
-/* Only these eleven colours and three families exist as Tailwind colours/fonts
+/* Only these twelve colours and three families exist as Tailwind colours/fonts
    (plus Tailwind's own transparent and current). */
 @theme inline {
   --color-*: initial;
@@ -78,6 +79,7 @@
   --color-bark: var(--bark);
   --color-bark-deep: var(--bark-deep);
   --color-blush: var(--blush);
+  --color-gold: var(--gold);
   --font-*: initial;
   --font-display: var(--font-bungee), "Arial Black", sans-serif;
   --font-label: var(--font-fredoka), "Trebuchet MS", sans-serif;

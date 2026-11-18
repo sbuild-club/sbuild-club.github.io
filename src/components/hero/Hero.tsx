@@ -14,7 +14,7 @@ import { BannerArt } from "./BannerArt";
  *    plaque, scattered keycaps, pixel clusters, exclamation marks, the lightbulb burst and the
  *    beaver peeking up at the bottom right.
  * 2. One centred column, as in the middle of the print flyer: the three pillars (Build /
- *    Community / Founding) in navy, the steel slogan below them, and the two CTAs centred under it.
+ *    Community / Founding) in navy, the steel slogan below them, and the three CTAs centred under it.
  *
  * Intro handoff (CONTRACT §2.6): `h1#wordmark[data-intro-target]` holds only the Wordmark svg and
  * the sr-only name; its box is the svg's box. Nothing on it or its ancestors is transformed,
@@ -61,6 +61,9 @@ export function Hero() {
           </Button>
           <Button href={site.hero.secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
             {site.hero.secondaryCta.label}
+          </Button>
+          <Button href={site.hero.socialsCta.href} variant="accent" className="w-full sm:w-auto">
+            {site.hero.socialsCta.label}
           </Button>
         </div>
       </div>
