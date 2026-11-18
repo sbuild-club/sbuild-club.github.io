@@ -123,7 +123,7 @@ export const site: Site = {
     },
     { name: "Khang (Tom) Nguyen", role: "Vice President", initials: "[T]" },
     { name: "Simon Ramirez", role: "Secretary", initials: "S", photo: "/team/simon.jpg" },
-    { name: "Alex Tran", role: "Treasurer", initials: "[A]" },
+    { name: "Alex Tran", role: "Treasurer", initials: "AT", photo: "/team/alex.jpg" },
     { name: "Han Le", role: "Graphic Designer", initials: "[H]" },
   ],
   openRole: {
