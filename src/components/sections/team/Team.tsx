@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "@/components/art/ArrowUpRight";
 import { Avatar, type AvatarTone } from "@/components/art/Avatar";
 import { SidePanels } from "@/components/art/SidePanels";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -24,7 +25,7 @@ export function Team() {
             const avatar = (
               <span
                 className={cx(
-                  "relative flex",
+                  "flex",
                   tilts[i % tilts.length],
                   member.href && "motion-safe:transition-transform motion-safe:duration-200 group-hover:scale-105",
                 )}
@@ -35,16 +36,6 @@ export function Team() {
                   tone={tones[i % tones.length]}
                   className="size-[150px] sm:size-[196px]"
                 />
-                {member.href ? (
-                  // The "this goes somewhere" sticker on the avatar's lower right, ringed in cream so it
-                  // reads as a separate piece laid on the disc.
-                  <span
-                    aria-hidden="true"
-                    className="absolute right-1 bottom-1 flex size-10 items-center justify-center rounded-full bg-navy font-label text-xl leading-none text-cream ring-4 ring-cream group-hover:bg-teal sm:right-2 sm:bottom-2 sm:size-11"
-                  >
-                    ↗
-                  </span>
-                ) : null}
               </span>
             );
             const nameClass =
@@ -53,8 +44,9 @@ export function Team() {
             return (
               <li key={i} className="flex w-[156px] min-w-0 flex-col items-center gap-1.5 text-center sm:w-[208px]">
                 {member.href ? (
-                  // Photo and name are one link, so either is a target; the name carries a dashed
-                  // teal underline (the stitch motif) and turns teal on hover.
+                  // Photo and name are one link, so either is a target. The name carries a dashed
+                  // teal underline (the stitch motif) and a thick teal arrow that flies out and back
+                  // on hover; the name turns teal on hover.
                   <a
                     href={member.href}
                     target="_blank"
@@ -62,13 +54,11 @@ export function Team() {
                     className="group flex max-w-full flex-col items-center gap-1.5"
                   >
                     {avatar}
-                    <span
-                      className={cx(
-                        nameClass,
-                        "underline decoration-teal decoration-dashed decoration-2 underline-offset-[5px] group-hover:text-teal",
-                      )}
-                    >
-                      {member.name}
+                    <span className={cx(nameClass, "inline-flex items-center gap-1.5 group-hover:text-teal")}>
+                      <span className="min-w-0 underline decoration-teal decoration-dashed decoration-2 underline-offset-[5px]">
+                        {member.name}
+                      </span>
+                      <ArrowUpRight className="text-teal" />
                     </span>
                   </a>
                 ) : (

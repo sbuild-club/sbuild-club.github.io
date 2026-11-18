@@ -43,6 +43,8 @@ export type Site = {
   manifesto: { heading: string; lead: string; paragraphs: [string, ...string[]] };
   programs: [Program, Program, Program];
   projects: Project[];
+  /** Lead under the projects ("cohort program") heading: `highlight` is set bold, `text` follows it. */
+  projectsIntro: { highlight: string; text: string };
   /** Shown in the projects section while `projects` is empty. */
   projectsNote: string;
   events: ClubEvent[];
@@ -90,7 +92,7 @@ export const site: Site = {
     lead: "Sbuild: Innovators & Founders Community",
     paragraphs: [
       "provides support, resources and community to launch ideas into something useful for people and find cofounders.",
-      "If you don't have ideas, join the community that incubates ideas and innovation, gain exposure to tech startups!",
+      "If you don't have ideas, join the community that incubates new ideas, gain exposure to startups!",
     ],
   },
   programs: [
@@ -100,6 +102,10 @@ export const site: Site = {
   ],
   // Empty until the first projects ship: the section then shows `projectsNote` instead of tiles.
   projects: [],
+  projectsIntro: {
+    highlight: "A 6–8 week program",
+    text: "to develop & build your idea, launch it with the support of the community",
+  },
   projectsNote: "coming soon...",
   // Empty for now: the events section then shows the open role (`openRole`) instead of slips.
   events: [],

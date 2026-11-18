@@ -107,6 +107,7 @@ Sizes read phone → wide. Breakpoints are Tailwind's defaults: `sm` 640px, `md`
 | Hero wordmark | SVG art | width 92% → 68% (`sm`) → 54% (`lg`), max 52rem | — | navy S, steel BUILD | `hero/Hero.tsx` |
 | Hero pillars ("Label: text") | Fredoka 600, label word 700 | `clamp(1.375rem, 4.4cqi, 2.25rem)` = 22 → 36px | 1.2 | navy | `hero/Hero.tsx` |
 | Hero slogan ("Dream it. …") | Fredoka 700 | `clamp(1.75rem, 6.6cqi, 3.5rem)` = 28 → 56px | 1.1 | steel | `hero/Hero.tsx` |
+| Cohort program lead ("**A 6–8 week program** to develop…") | Fredoka 500, highlight 700 | 20 → 24px (`sm`), max width 40rem | 1.35 | navy | `sections/projects/Projects.tsx` |
 | Nav brand line ("Sbuild: Innovators & Founders Community") | Fredoka; name 700 navy (teal on hover), descriptor 600 teal; both always the same size | 13px on phones (12px below 375px) → 17px (`sm`) → 20px (`xl`) | 1.2 | navy + teal | `nav/Nav.tsx` |
 | Footer email | Bungee | `clamp(1.125rem, 6.2vw, 1.625rem)` → from `sm` `clamp(1.625rem, 3.4vw, 2.875rem)` = 18 → 46px | 1.1 | cream, sage on hover | `footer/Footer.tsx` |
 | Team member name | Fredoka 600 | 18px | 1.2 | navy, tracking 0.03em | `sections/team/Team.tsx` |
@@ -188,6 +189,7 @@ All art is flat inline SVG in the palette, drawn as cut paper, in `src/component
 | `PixelCluster` | Small chip clusters: `tee`, `plus`, `row` | steel | Hero banner |
 | `SidePanels` | Large angled sage and sage-soft panels at band edges | sage, sage-soft | Hero (both, from `sm`), Team (left, from `lg`) |
 | `ProjectIcon` | Eight icons: rocket, wrench, lightbulb, chip, terminal, satellite, flag, bolt | `currentColor` (steel on tiles) | Project tiles |
+| `ArrowUpRight` | Thick round-capped ↗ for links that leave the site; flies out and back in on hover (`animate-arrow-fly`, motion-safe) | `currentColor` (teal) | Team member links |
 | `Avatar` | Round disc with a stitch ring and initials, or a member photo set into the disc | sage, sage-soft, steel, teal or navy disc | Team |
 
 Size art with a width class plus `h-auto` (`className="h-auto w-[clamp(6rem,15vw,17.5rem)]"`). The `size` prop is the fallback width.
