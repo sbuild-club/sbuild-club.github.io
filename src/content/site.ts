@@ -141,7 +141,7 @@ export const site: Site = {
     newsletter: { label: "sign up for our newsletter", href: newsletterForm },
     socials: [
       { label: "discord", href: "https://discord.gg/g7cnSprnpx" },
-      { label: "instagram", href: "https://www.instagram.com/sbuildclub/" },
+      { label: "instagram", href: "https://www.instagram.com/sbuild.sbu/" },
       { label: "linkedin", href: "https://www.linkedin.com/company/s-build-club/home/" },
     ],
     email: "clubsbuild@gmail.com",
